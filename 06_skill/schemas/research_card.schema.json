@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/literature-pipeline/research_card.schema.json",
+  "title": "期货日内因子研究卡片",
+  "description": "每篇文献一张卡片。original 与 adaptation 物理隔离：original 只允许记录原文支持的信息且每条挂 source_locators；adaptation 是项目判断，不挂原文位置；extensions 必须通过 basis_evidence_ids 引用 original 中的 evidence_id。",
+  "type": "object",
+  "required": ["doc_id", "metadata", "coverage", "original", "adaptation", "missing_fields", "source_locators_index"],
+  "additionalProperties": false,
+
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "pattern": "^doc_[0-9]{2}$",
+      "description": "短 id，如 doc_01，贯穿所有目录与日志"
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["title", "year", "lang", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "title": {"type": "string"},
+        "author": {"type": "string"},
+        "year": {"type": "integer"},
+        "lang": {"enum": ["zh", "en"]},
+        "type": {"enum": ["research_report", "paper"]}
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["input_scope"],
+      "additionalProperties": false,
+      "properties": {
+        "input_scope": {"enum": ["fulltext", "partial"]},
+        "known_missing_sections": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+
+    "original": {
+      "type": "object",
+      "description": "原文事实块：只记录原文支持的信息。每条 evidence 必须挂 source_locators；statement_type 区分作者说法与实证发现。",
+      "additionalProperties": false,
+      "properties": {
+        "research_setting":            {"$ref": "#/$defs/evidenceList"},
+        "research_objective":          {"$ref": "#/$defs/evidenceList"},
+        "economic_mechanism":         {"$ref": "#/$defs/evidenceList"},
+        "assumptions":                 {"$ref": "#/$defs/evidenceList"},
+        "raw_data":                    {"$ref": "#/$defs/evidenceList"},
+        "feature_definition":          {"$ref": "#/$defs/evidenceList"},
+        "preprocessing":               {"$ref": "#/$defs/evidenceList"},
+        "operators_parameters":        {"$ref": "#/$defs/evidenceList"},
+        "computation_boundaries":     {"$ref": "#/$defs/evidenceList"},
+        "prediction_target":            {"$ref": "#/$defs/evidenceList"},
+        "evaluation_method":           {"$ref": "#/$defs/evidenceList"},
+        "data_split":                  {"$ref": "#/$defs/evidenceList"},
+        "main_results":               {"$ref": "#/$defs/evidenceList"},
+        "incremental_value":          {"$ref": "#/$defs/evidenceList"},
+        "robustness_failures":         {"$ref": "#/$defs/evidenceList"},
+        "trading_feasibility":        {"$ref": "#/$defs/evidenceList"},
+        "author_limitations_open_questions": {"$ref": "#/$defs/evidenceList"}
+      }
+    },
+
+    "adaptation": {
+      "type": "object",
+      "description": "项目判断块：允许推理，但不挂 source_locators（它不是原文证据）。所有结论由模型标注为项目判断。",
+      "required": ["assessment_scope", "data_support", "method_applicability"],
+      "additionalProperties": false,
+      "properties": {
+        "assessment_scope": {"type": "string", "description": "基于全文还是部分材料，待确认条件"},
+        "data_support": {
+          "type": "object",
+          "required": ["available", "missing"],
+          "additionalProperties": false,
+          "properties": {
+            "available": {"type": "string"},
+            "derivable": {"type": "string"},
+            "missing": {"type": "string"},
+            "proxy_and_loss": {"type": "string"}
+          }
+        },
+        "method_applicability": {
+          "enum": ["direct_replicate", "needs_adapt", "needs_data", "unclear", "not_suitable"]
+        },
+        "required_changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["original", "why", "how"],
+            "additionalProperties": false,
+            "properties": {
+              "original": {"type": "string"},
+              "why": {"type": "string"},
+              "how": {"type": "string"},
+              "effect": {"type": "string"},
+              "revalidate": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+
+    "extensions": {
+      "type": "array",
+      "description": "有依据的扩展假设，可空。每条必须通过 basis_evidence_ids 引用 original 里的 evidence_id；status 恒为“待验证”，不允许写虚构效果。",
+      "items": {
+        "type": "object",
+        "required": ["extension_id", "basis_evidence_ids", "hypothesis", "proposed_feature", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "extension_id": {"type": "string"},
+          "basis_evidence_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "hypothesis": {"type": "string"},
+          "proposed_feature": {"type": "string"},
+          "difference_from_original": {"type": "string"},
+          "assumptions_and_failure_modes": {"type": "string"},
+          "validation_plan": {"type": "string"},
+          "status": {"enum": ["待验证"]}
+        }
+      }
+    },
+
+    "candidate_factor_cards": {
+      "type": "array",
+      "description": "从卡片抽出、可直接进特征字典的候选因子。",
+      "items": {
+        "type": "object",
+        "required": ["feature_name", "formula", "input_fields", "repro_status"],
+        "additionalProperties": false,
+        "properties": {
+          "feature_name": {"type": "string"},
+          "formula": {"type": "string"},
+          "window": {"type": "string"},
+          "input_fields": {"type": "array", "items": {"type": "string"}},
+          "economic_meaning": {"type": "string"},
+          "validity_rule": {"type": "string"},
+          "repro_status": {"enum": ["direct_replicate", "needs_adapt", "needs_data"]}
+        }
+      }
+    },
+
+    "missing_fields": {
+      "type": "array",
+      "description": "原文没有、模型不得自行补全的信息，逐条写明缺什么。",
+      "items": {"type": "string"}
+    },
+
+    "source_locators_index": {
+      "type": "object",
+      "description": "evidence_id -> 原文定位（chunk_id / 页码 / 章节）。",
+      "additionalProperties": {"type": "string"}
+    }
+  },
+
+  "$defs": {
+    "evidenceList": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidenceRecord"}
+    },
+    "evidenceRecord": {
+      "type": "object",
+      "required": ["evidence_id", "content", "statement_type", "source_locators"],
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {"type": "string", "description": "本卡片内唯一，如 e_001"},
+        "content": {"type": "string"},
+        "statement_type": {
+          "enum": ["method_definition", "author_hypothesis", "author_explanation",
+                   "empirical_finding", "limitation", "future_suggestion"]
+        },
+        "source_locators": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["doc_id", "chunk_id"],
+            "additionalProperties": false,
+            "properties": {
+              "doc_id": {"type": "string"},
+              "chunk_id": {"type": "string"},
+              "page": {"type": "string"},
+              "section": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

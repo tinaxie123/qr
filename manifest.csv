@@ -1,0 +1,16 @@
+doc_id,title,author,year,lang,type,is_scanned,has_formula_table,has_negative_or_robustness,batch,note,source_path
+doc_01,日内动量独立复现与统计审计 Beat the Market Revisited,,2026,en,paper,False,True,True,B,负面结果与复现审计标杆,期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/01_日内动量独立复现与统计审计(Beat the Market Revisited).pdf
+doc_02,0DTE期权与尾部保护价格 修订稿,,2026,en,paper,False,True,True,B,制度事件因果识别对照；不可直接迁移,期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/02_0DTE期权与尾部保护价格(修订稿2026-09).pdf
+doc_03,分数阶导数识别市场效率状态与粗糙波动,,2026,en,paper,False,True,False,C,状态识别工具；无交易绩效,期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/03_分数阶导数识别市场效率状态与粗糙波动(GL).pdf
+doc_04,预测悖论 ML加密货币实盘失败,,2026,en,paper,False,False,True,B,回测到实盘落差负面案例,期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/04_预测悖论_ML加密货币实盘失败(The Prediction Paradox).pdf
+doc_05,股票因子分散的层次聚类 JPMorgan HRP,,2018,en,paper,False,True,False,B,因子去相关与分散化方法,期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/05_股票因子分散的层次聚类(JPMorgan HRP).pdf
+doc_06,日内资金流策略标准化与信号化 指增中性七,,2026,zh,research_report,False,True,False,A,最贴近期货日内因子；优先校准,期货日内因子_精选文献15篇/02_中文_日内量价与选股/06_日内资金流策略标准化与信号化(指增中性七).pdf
+doc_07,量价事件驱动信号在绝对收益策略 量价淘金十八,,2026,zh,research_report,False,True,True,A,稳健性与参数敏感性标杆；优先校准,期货日内因子_精选文献15篇/02_中文_日内量价与选股/07_量价事件驱动信号在绝对收益策略(量价淘金十八).pdf
+doc_08,量价指纹模型迭代 行为选股与条件风格,,2026,zh,research_report,False,False,True,B,机器学习量价因子与适用边界,期货日内因子_精选文献15篇/02_中文_日内量价与选股/08_量价指纹模型迭代_行为选股与条件风格(ML选股二).pdf
+doc_09,筹码分布因子系统构建,,2025,zh,research_report,True,False,False,C,表格为图片；识别困难压测,期货日内因子_精选文献15篇/02_中文_日内量价与选股/09_筹码分布因子系统构建【表格为图片_识别困难】.pdf
+doc_10,噪声Alpha环境下信号筛选与分散化 学海拾珠282,,2026,zh,research_report,False,True,True,B,多重检验与p值陷阱方法论警示,期货日内因子_精选文献15篇/02_中文_日内量价与选股/10_噪声Alpha环境下信号筛选与分散化(学海拾珠282).pdf
+doc_11,期权高频 凸性套利机会解析,,2024,zh,research_report,False,True,True,B,主动证伪与容量测算范本,期货日内因子_精选文献15篇/03_中文_期权与可转债/11_期权高频_凸性套利机会解析(高频系列四).pdf
+doc_12,可转债定价与套利策略初探 CRR二叉树,,2022,zh,research_report,False,True,False,A,公式明确可复现；优先校准,期货日内因子_精选文献15篇/03_中文_期权与可转债/12_可转债定价与套利策略初探_CR R二叉树(招商).pdf
+doc_13,转债蒙特卡洛定价改进 测度变换与张量,,2024,zh,research_report,True,False,False,C,公式受损；识别困难压测,期货日内因子_精选文献15篇/03_中文_期权与可转债/13_转债蒙特卡洛定价改进_测度变换与张量【公式受损】(银河).pdf
+doc_14,商品期限结构 展期规律统计与时点优化,,2026,zh,research_report,False,True,False,B,商品期货统计型研究；表格明确,期货日内因子_精选文献15篇/04_中文_商品与跨资产/14_商品期限结构_展期规律统计与时点优化.pdf
+doc_15,FOF跨资产 风险平价与时序因子增强配置,,2026,zh,research_report,False,True,True,B,样本外与过拟合检验规范,期货日内因子_精选文献15篇/04_中文_商品与跨资产/15_FOF跨资产_风险平价与时序因子增强配置.pdf

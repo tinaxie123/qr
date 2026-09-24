@@ -1,0 +1,89 @@
+# =============================================================
+# 阶段2 文献知识工程 · 流水线配置
+# 所有可调参数集中在此；改流程先改这里，不要写死在代码里。
+# =============================================================
+
+project:
+  name: 期货日内因子挖掘 · 文献知识工程
+  task_type: single_contract_intraday_timeseries   # 单合约、交易日内时序
+  fixed_rules:
+    - 特征只使用计算时点已获得的信息，未来信息只进标签
+    - 计算状态不跨交易日延续，交易日内平仓
+    - 不把五档快照当作完整逐笔/逐笔委托事件
+  lookback_windows_sec: [3, 5, 15, 60]
+  primary_horizon_sec: 15
+
+# ---------- 目录（相对本 config 所在目录） ----------
+paths:
+  raw:           00_raw/          # 原始 PDF/Word，只读
+  manifest:      manifest.csv
+  parsed:        01_parsed/        # MinerU 输出的 markdown，带页码锚点
+  chunks:        02_chunks/       # 切片后的 chunks（jsonl）
+  cards:         03_cards/         # DeepSeek V4 输出，每篇一个 JSON
+  review:        04_review/
+  review_table:  04_review/review_table.csv
+  fixes:         04_review/fixes/  # 退回重抽的历史版本
+  topics:        05_topics/       # 3000-5000 字主题归并文档
+  skill:         06_skill/
+  cases:         07_cases/        # 典型案例
+  reports:       08_reports/      # 给 mentor/复核人的批次报告
+  logs:          logs/
+  prompts:       logs/prompts/     # 提示词历史版本，不覆盖
+  card_schema:   schemas/research_card.schema.json
+  feature_idea_schema: schemas/research_feature_idea.schema.json
+
+# ---------- 首轮批次设计 ----------
+batches:
+  A_calibrate:
+    n: 3
+    purpose: 校准提示词与 JSON schema，逐字人工核对
+    allow_prompt_edit: true
+  B_trial:
+    n: 9
+    purpose: 正式试跑，检验结构稳定性与复核工时
+    allow_prompt_edit: small_recorded   # 可小改，但必须记录版本
+  C_held_out:
+    n: 3
+    purpose: 冻结提示词后留出评估，检验稳定性，不参与调参
+    allow_prompt_edit: false
+
+# ---------- 材料覆盖要求（12 篇应尽量满足） ----------
+coverage_requirements:
+  chinese_research_report: 4      # 中文金工研报
+  english_microstructure_paper: 3 # 英文市场微观结构论文
+  with_explicit_formula_table: 4  # 含明确公式/表格（复现类案例来源）
+  scanned_or_hard_ocr: 1          # 扫描件/公式识别困难（压幻觉上限）
+  with_negative_or_robustness: 2  # 含负面结果/稳健性/数据不匹配
+
+# ---------- 提取模型 ----------
+model:
+  provider: deepseek
+  model_name: deepseek-v4
+  prompt_version: v1                # 每改一次提示词 +1，旧版存入 logs/prompts/
+  system_prompt_file: logs/prompts/system_v1.md
+
+# ---------- 质量门阈值（人工复核） ----------
+quality_gates:
+  formula_check:
+    sample_all_key_formulas: true   # 卡片里全部关键公式都回原文核对
+    pass_rate_required: 1.0         # 批次 A 必须 100% 才进批次 B
+  locator_spotcheck:
+    sample_n_per_card: 5            # 每篇抽 ≥5 个 source_locators 回查
+    pass_rate_required: 1.0
+  hallucination:
+    forbidden:                      # 三类严重错误，任一出现即退回
+      - 把 adaptation/项目判断写成原文结论
+      - 原文未说却补全 missing_fields
+      - extensions 不挂 basis_evidence_ids
+  batch_exit:
+    severe_errors_max_after_B_C: 1  # 批次 B+C 严重错误 ≤1 篇且已修正
+
+# ---------- 主题归并 ----------
+topics:
+  min_words: 3000
+  max_words: 5000
+  suggested_themes:
+    - 盘口失衡及其变化
+    - 流动性冲击与恢复
+    - 持仓量与价量关系
+  keep_disagreement: true           # 保留文献间分歧，不强行统一

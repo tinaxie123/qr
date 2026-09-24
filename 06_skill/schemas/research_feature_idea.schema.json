@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/literature-pipeline/research_feature_idea.schema.json",
+  "title": "文献驱动特征想法输出规范",
+  "description": "供研究 Skill 后续被调用时使用。它不是阶段 2 的批次交付物，而是约束智能体如何基于文献证据提出可复核的特征想法。",
+  "type": "object",
+  "required": ["idea_id", "proposal_kind", "feature_name", "required_fields", "formula", "design_reason", "applicable_conditions", "exception_handling", "validation_plan", "abandon_conditions", "literature_sources"],
+  "additionalProperties": false,
+  "properties": {
+    "idea_id": {
+      "type": "string",
+      "pattern": "^idea_[A-Za-z0-9_\\-]+$"
+    },
+    "proposal_kind": {
+      "enum": ["replicate", "adapt", "transfer", "extend"],
+      "description": "replicate=尽量复现原文；adapt=按本项目数据口径调整；transfer=迁移机制；extend=基于文献证据提出扩展"
+    },
+    "feature_name": {"type": "string"},
+    "required_fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["field", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "field": {"type": "string"},
+          "role": {"type": "string"},
+          "availability": {"type": "string"}
+        }
+      }
+    },
+    "formula": {
+      "type": "object",
+      "required": ["expression", "variables", "window_sec", "time_alignment", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "expression": {"type": "string"},
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["symbol", "definition"],
+            "additionalProperties": false,
+            "properties": {
+              "symbol": {"type": "string"},
+              "definition": {"type": "string"},
+              "unit": {"type": "string"}
+            }
+          }
+        },
+        "window_sec": {
+          "type": "array",
+          "items": {"enum": [3, 5, 15, 60]}
+        },
+        "denominator": {"type": "string"},
+        "time_alignment": {"type": "string"},
+        "unit": {"type": "string"}
+      }
+    },
+    "design_reason": {"type": "string"},
+    "applicable_conditions": {"type": "string"},
+    "exception_handling": {
+      "type": "object",
+      "required": ["insufficient_history", "zero_denominator", "missing_values"],
+      "additionalProperties": false,
+      "properties": {
+        "insufficient_history": {"type": "string"},
+        "zero_denominator": {"type": "string"},
+        "missing_values": {"type": "string"},
+        "other": {"type": "string"}
+      }
+    },
+    "validation_plan": {
+      "type": "object",
+      "required": ["target", "horizon_sec", "metrics", "baseline", "sample_split"],
+      "additionalProperties": false,
+      "properties": {
+        "target": {"type": "string"},
+        "horizon_sec": {"type": "integer"},
+        "price_benchmark": {"type": "string"},
+        "metrics": {"type": "array", "items": {"type": "string"}},
+        "baseline": {"type": "string"},
+        "sample_split": {"type": "string"},
+        "ablation_or_controls": {"type": "string"}
+      }
+    },
+    "expected_direction": {"type": "string"},
+    "abandon_conditions": {"type": "string"},
+    "adaptation_notes": {"type": "string"},
+    "literature_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["doc_id", "evidence_id", "chunk_id"],
+        "additionalProperties": false,
+        "properties": {
+          "doc_id": {"type": "string"},
+          "evidence_id": {"type": "string"},
+          "chunk_id": {"type": "string"},
+          "page": {"type": "string"},
+          "quote": {"type": "string"}
+        }
+      }
+    }
+  }
+}
