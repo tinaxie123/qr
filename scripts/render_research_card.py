@@ -1,162 +1,119 @@
-#!/usr/bin/env python3
-"""Render research card JSON into a compact Markdown review card."""
-
-from __future__ import annotations
-
-import argparse
+import os
 import json
-from pathlib import Path
-from typing import Dict, Iterable, List
+import glob
+import yaml
 
+def load_config():
+    with open('config.yaml', 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
 
-SECTION_TITLES = {
-    "research_setting": "研究场景",
-    "research_objective": "研究目标",
-    "economic_mechanism": "经济机制",
-    "assumptions": "成立条件",
-    "raw_data": "原始数据",
-    "feature_definition": "特征公式",
-    "preprocessing": "数据处理",
-    "operators_parameters": "算子与参数",
-    "computation_boundaries": "计算边界",
-    "prediction_target": "预测标签",
-    "evaluation_method": "检验方法",
-    "data_split": "数据划分",
-    "main_results": "主要结果",
-    "incremental_value": "增量价值",
-    "robustness_failures": "稳健性与失效",
-    "trading_feasibility": "交易可实现性",
-    "author_limitations_open_questions": "局限与未解问题",
-}
+def render_markdown(card_data):
+    doc_id = card_data.get('doc_id', 'Unknown')
+    metadata = card_data.get('metadata', {})
+    
+    md_lines = []
+    md_lines.append(f"# {metadata.get('title', 'Unknown Title')}")
+    md_lines.append(f"**Doc ID:** {doc_id}")
+    authors = ", ".join(metadata.get('authors', []))
+    md_lines.append(f"**Authors:** {authors}")
+    md_lines.append(f"**Year:** {metadata.get('publication_year', 'Unknown')}")
+    md_lines.append("")
+    
+    md_lines.append("## 1. 原文事实 (Original)")
+    original = card_data.get('original', {})
+    
+    def render_original_section(title, data):
+        md_lines.append(f"### {title}")
+        desc = data.get('description', '缺失')
+        locators = data.get('source_locators', [])
+        md_lines.append(f"{desc}")
+        if locators:
+            md_lines.append(f"*Sources: {', '.join(locators)}*")
+        else:
+            md_lines.append("*Sources: [] (未提供)*")
+        md_lines.append("")
 
+    render_original_section("研究场景 (Research Scenario)", original.get('research_scenario', {}))
+    render_original_section("经济机制 (Economic Mechanism)", original.get('economic_mechanism', {}))
+    
+    md_lines.append("### 特征公式 (Feature Formulas)")
+    formulas = original.get('feature_formulas', [])
+    if not formulas:
+        md_lines.append("原文未提及公式。")
+    else:
+        for f in formulas:
+            md_lines.append(f"**{f.get('name', 'Unnamed Formula')}**")
+            md_lines.append(f"$$ {f.get('formula', '')} $$")
+            locators = f.get('source_locators', [])
+            if locators:
+                md_lines.append(f"*Sources: {', '.join(locators)}*")
+            variables = f.get('variables', [])
+            if variables:
+                md_lines.append("- 变量说明：")
+                for v in variables:
+                    md_lines.append(f"  - `{v.get('symbol', '')}`: {v.get('meaning', '')}")
+            md_lines.append("")
+            
+    render_original_section("数据处理 (Data Processing)", original.get('data_processing', {}))
+    render_original_section("检验方法 (Testing Methods)", original.get('testing_methods', {}))
+    render_original_section("稳健性与失败 (Robustness & Failures)", original.get('robustness_and_failures', {}))
+    render_original_section("交易可实现性 (Tradability)", original.get('tradability', {}))
 
-def load_json(path: Path) -> Dict:
-    with path.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+    md_lines.append("## 2. 项目适配 (Adaptation)")
+    adaptation = card_data.get('adaptation', {})
+    md_lines.append("### 与项目契合度")
+    md_lines.append(adaptation.get('project_fit', '未提供'))
+    md_lines.append("### 调整建议")
+    md_lines.append(adaptation.get('adjustments_needed', '未提供'))
+    md_lines.append(f"### 数据充分性\n{adaptation.get('data_sufficiency', '未提供')}")
+    md_lines.append(f"### 复现模式\n{adaptation.get('replication_mode', '未提供')}")
+    missing_fields = adaptation.get('missing_fields', [])
+    md_lines.append(f"### 缺失字段\n{', '.join(missing_fields) if missing_fields else '无'}")
+    md_lines.append("")
 
+    md_lines.append("## 3. 扩展假设 (Extensions)")
+    extensions = card_data.get('extensions', [])
+    if not extensions:
+        md_lines.append("无扩展假设。")
+    else:
+        for i, ext in enumerate(extensions, 1):
+            md_lines.append(f"### 假设 {i}")
+            md_lines.append(f"**内容:** {ext.get('hypothesis', '')}")
+            rationale = ext.get('rationale')
+            if rationale:
+                md_lines.append(f"**推导理由:** {rationale}")
+            source_locators = ext.get('source_locators', [])
+            md_lines.append(f"**本文证据:** {', '.join(source_locators) if source_locators else '无'}")
+            basis = ext.get('basis_evidence_ids', [])
+            md_lines.append(f"**跨文献证据ID:** {', '.join(basis) if basis else 'L2 暂空，待 L3 回填'}")
+            md_lines.append("")
+            
+    return "\n".join(md_lines)
 
-def locator_text(record: Dict) -> str:
-    parts: List[str] = []
-    for locator in record.get("source_locators", []):
-        loc = locator.get("chunk_id", "")
-        if locator.get("page"):
-            loc += f" p.{locator['page']}"
-        if locator.get("section"):
-            loc += f" {locator['section']}"
-        parts.append(loc.strip())
-    return "; ".join(part for part in parts if part)
-
-
-def render_card(card: Dict) -> str:
-    metadata = card.get("metadata", {})
-    lines: List[str] = []
-    lines.append(f"# {card.get('doc_id', '')} 研究卡片")
-    lines.append("")
-    lines.append(f"- 标题：{metadata.get('title', '')}")
-    lines.append(f"- 作者：{metadata.get('author', '')}")
-    lines.append(f"- 年份：{metadata.get('year', '')}")
-    lines.append(f"- 语言/类型：{metadata.get('lang', '')} / {metadata.get('type', '')}")
-    lines.append(f"- 覆盖范围：{card.get('coverage', {}).get('input_scope', '')}")
-    lines.append("")
-
-    lines.append("## 原文信息")
-    for key, title in SECTION_TITLES.items():
-        records = card.get("original", {}).get(key, []) or []
-        if not records:
-            continue
-        lines.append("")
-        lines.append(f"### {title}")
-        for record in records:
-            loc = locator_text(record)
-            prefix = f"- `{record.get('evidence_id', '')}` [{record.get('statement_type', '')}]"
-            if loc:
-                prefix += f" ({loc})"
-            lines.append(f"{prefix}: {record.get('content', '')}")
-
-    lines.append("")
-    lines.append("## 项目适配")
-    adaptation = card.get("adaptation", {})
-    lines.append(f"- 评估范围：{adaptation.get('assessment_scope', '')}")
-    lines.append(f"- 方法适用性：{adaptation.get('method_applicability', '')}")
-    data_support = adaptation.get("data_support", {}) or {}
-    lines.append(f"- 可直接支持：{data_support.get('available', '')}")
-    lines.append(f"- 可派生：{data_support.get('derivable', '')}")
-    lines.append(f"- 缺失：{data_support.get('missing', '')}")
-    lines.append(f"- 代理与损失：{data_support.get('proxy_and_loss', '')}")
-
-    changes = adaptation.get("required_changes", []) or []
-    if changes:
-        lines.append("")
-        lines.append("### 需要修改")
-        for change in changes:
-            lines.append(f"- 原方法：{change.get('original', '')}")
-            lines.append(f"  调整原因：{change.get('why', '')}")
-            lines.append(f"  调整方式：{change.get('how', '')}")
-            if change.get("revalidate"):
-                lines.append(f"  需重验：{change.get('revalidate', '')}")
-
-    extensions = card.get("extensions", []) or []
-    if extensions:
-        lines.append("")
-        lines.append("## 扩展假设")
-        for extension in extensions:
-            basis = ", ".join(extension.get("basis_evidence_ids", []))
-            lines.append(f"- `{extension.get('extension_id', '')}` 基于 {basis}: {extension.get('hypothesis', '')}")
-            lines.append(f"  特征想法：{extension.get('proposed_feature', '')}")
-            lines.append(f"  验证：{extension.get('validation_plan', '')}")
-
-    factors = card.get("candidate_factor_cards", []) or []
-    if factors:
-        lines.append("")
-        lines.append("## 候选因子")
-        for factor in factors:
-            fields = ", ".join(factor.get("input_fields", []))
-            lines.append(f"- {factor.get('feature_name', '')}: `{factor.get('formula', '')}`")
-            lines.append(f"  字段：{fields}")
-            lines.append(f"  复现状态：{factor.get('repro_status', '')}")
-
-    missing = card.get("missing_fields", []) or []
-    if missing:
-        lines.append("")
-        lines.append("## 缺失信息")
-        for item in missing:
-            lines.append(f"- {item}")
-
-    lines.append("")
-    return "\n".join(lines)
-
-
-def iter_cards(cards: List[Path], cards_dir: Path) -> Iterable[Path]:
-    if cards:
-        yield from cards
+def main():
+    config = load_config()
+    cards_dir = config['paths']['cards']
+    md_out_dir = config['paths']['review'] + "/cards_md"
+    
+    os.makedirs(md_out_dir, exist_ok=True)
+    
+    json_files = glob.glob(os.path.join(cards_dir, "*.json"))
+    if not json_files:
+        print("未找到任何 JSON 卡片文件。")
         return
-    if cards_dir.exists():
-        yield from sorted(cards_dir.glob("doc_*.json"))
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cards-dir", type=Path, default=Path("03_cards"))
-    parser.add_argument("--out-dir", type=Path, default=Path("04_review/cards_md"))
-    parser.add_argument("--force", action="store_true")
-    parser.add_argument("cards", nargs="*", type=Path)
-    args = parser.parse_args()
-
-    paths = list(iter_cards(args.cards, args.cards_dir))
-    if not paths:
-        print("No card JSON files found.")
-        return 0
-
-    args.out_dir.mkdir(parents=True, exist_ok=True)
-    for path in paths:
-        card = load_json(path)
-        target = args.out_dir / f"{card.get('doc_id', path.stem)}.card.md"
-        if target.exists() and not args.force:
-            raise FileExistsError(f"{target} already exists; pass --force to overwrite")
-        target.write_text(render_card(card), encoding="utf-8")
-        print(f"[ok] {path} -> {target}")
-    return 0
-
+        
+    for jf in json_files:
+        filename = os.path.basename(jf)
+        doc_id = os.path.splitext(filename)[0]
+        with open(jf, 'r', encoding='utf-8') as f:
+            card_data = json.load(f)
+            
+        md_content = render_markdown(card_data)
+        out_path = os.path.join(md_out_dir, f"{doc_id}.card.md")
+        
+        with open(out_path, 'w', encoding='utf-8') as f:
+            f.write(md_content)
+        print(f"[{doc_id}] 已渲染 Markdown 至 {out_path}")
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

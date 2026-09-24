@@ -1,0 +1,98 @@
+{
+  "doc_id": "doc_07",
+  "metadata": {
+    "title": "量价事件驱动信号在绝对收益策略 量价淘金十八",
+    "authors": [
+      "赵博文",
+      "沈芷琦",
+      "刘富兵"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "研究基于高频量价事件驱动信号构建股票绝对收益策略，重点考察高/低位放量事件簇的应用。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 前言"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "通过识别股价高/低位与成交量放大的结合，生成事件信号，用于个股择时。",
+      "source_locators": [
+        "<!-- page: 5 --> Section 2.1"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "高/低位放量信号",
+        "formula": "P_{t} > P_{90\\%} \\text{ 且 } V_{t} > V_{90\\%}",
+        "variables": [
+          {
+            "symbol": "P_{t}",
+            "meaning": "当前价格"
+          },
+          {
+            "symbol": "P_{90\\%}",
+            "meaning": "价格序列的90%分位数"
+          },
+          {
+            "symbol": "V_{t}",
+            "meaning": "当前成交量"
+          },
+          {
+            "symbol": "V_{90\\%}",
+            "meaning": "成交量序列的90%分位数"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 7 --> Section 2.3"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "使用高频量价数据（分钟收盘价和成交量）进行日内和日间滚动对比，定义高/低位和放量。",
+      "source_locators": [
+        "<!-- page: 5 --> Section 2.2.1",
+        "<!-- page: 6 --> Section 2.2.2"
+      ]
+    },
+    "testing_methods": {
+      "description": "通过通道策略构建组合，测试信号的有效性，重点考察年化收益、卡玛比率等指标。",
+      "source_locators": [
+        "<!-- page: 11 --> Section 3.4"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "策略在2018年、2023-2024年等市场回调时表现稳健，但模型依赖历史数据，市场环境剧烈变化可能导致失效。",
+      "source_locators": [
+        "<!-- page: 20 --> Section 风险提示"
+      ]
+    },
+    "tradability": {
+      "description": "策略采用日度调仓，使用VWAP进行买卖，对涨跌停股票进行延后交易处理，实际交易可实现性较高。",
+      "source_locators": [
+        "<!-- page: 11 --> Section 3.4"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "该策略的高频量价事件驱动信号适用于期货日内单合约交易，但需调整信号定义和数据处理方式以适应期货市场特性。",
+    "adjustments_needed": "需将股票的高/低位定义调整为期货合约的相应价格阈值，并使用期货的成交量数据替代股票的成交量数据。",
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust",
+    "missing_fields": [
+      "期货合约的分钟级成交量数据",
+      "期货合约的日内价格波动阈值"
+    ]
+  },
+  "extensions": [
+    {
+      "hypothesis": "在期货日内交易中，结合价格动量和成交量突变作为新的事件信号，可能提高策略的收益稳定性。",
+      "rationale": "原文中高/低位放量信号在股票市场中表现稳健，期货市场的价格动量和成交量突变可能具有类似的预测能力。",
+      "source_locators": [
+        "<!-- page: 7 --> Section 2.3"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

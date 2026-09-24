@@ -1,0 +1,126 @@
+{
+  "doc_id": "doc_01",
+  "metadata": {
+    "title": "“Beat the Market\" Revisited: An Independent Replication and Statistical Audit of an Intraday Momentum Strategy",
+    "authors": [
+      "José Enrique Delgado"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "The study independently replicates and extends Zarattini, Aziz, and Barbon's intraday momentum strategy applied to SPY, using a one-minute TradeStation dataset from January 2000 through August 2026.",
+      "source_locators": [
+        "<!-- page: 1 -->"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "The strategy constructs a time-varying 'Noise Area' around the opening price, enters trend-following positions when price action indicates an abnormal demand/supply imbalance, and applies a dynamic trailing stop based on the current Noise Area boundary and Volume Weighted Average Price (VWAP).",
+      "source_locators": [
+        "<!-- page: 3 --> Section 1"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "Noise Area",
+        "formula": "\\sigma_{t,h} = \\frac{1}{L} \\sum_{i=1}^{L} m_{t-i,h}",
+        "variables": [
+          {
+            "symbol": "L",
+            "meaning": "lookback period of 14 trading days"
+          },
+          {
+            "symbol": "m_{t-i,h}",
+            "meaning": "absolute move from the open on prior day t-i at checkpoint h"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 3 --> Section 2.1"
+        ]
+      },
+      {
+        "name": "VWAP",
+        "formula": "VWAP_{t,h} = \\frac{\\sum_{j \\leq h} TP_{t,j} V_{t,j}}{\\sum_{j \\leq h} V_{t,j}}",
+        "variables": [
+          {
+            "symbol": "TP_{t,j}",
+            "meaning": "typical price at time j on day t"
+          },
+          {
+            "symbol": "V_{t,j}",
+            "meaning": "volume at time j on day t"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 4 --> Section 2.2"
+        ]
+      },
+      {
+        "name": "Volatility targeting",
+        "formula": "\\ell_t = \\min\\left(4, \\frac{0.02}{\\widehat{\\sigma}_t^{SPY}}\\right)",
+        "variables": [
+          {
+            "symbol": "\\widehat{\\sigma}_t^{SPY}",
+            "meaning": "sample standard deviation of the prior 14 daily SPY returns"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 4 --> Section 2.3"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "The primary replication uses SPY one-minute regular-session data exported from TradeStation, covering 3 January 2000 through 14 August 2026. The original paper uses one-minute IQFeed data from May 2007 through April 2024.",
+      "source_locators": [
+        "<!-- page: 3 --> Section 3.1"
+      ]
+    },
+    "testing_methods": {
+      "description": "The study performs an independent replication and a post-publication extension, reconciling implementation details against the authors' published Python reference code. It also subjects the strategy to a documented search and statistical audit covering 80 SPY strategy alternatives.",
+      "source_locators": [
+        "<!-- page: 1 --> Abstract",
+        "<!-- page: 3 --> Section 3"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "The study finds that the strategy's performance is regime-dependent, with strong initial post-publication performance followed by a materially weak recent regime. Many intuitive modifications fail to improve the strategy's performance across all validation windows.",
+      "source_locators": [
+        "<!-- page: 6 --> Section 4.2",
+        "<!-- page: 15 --> Section 7"
+      ]
+    },
+    "tradability": {
+      "description": "The strategy models a commission of $0.0035 per share and slippage of $0.001 per share. The authors report that more conservative transaction-cost assumptions weaken the edge but do not eliminate the historical result.",
+      "source_locators": [
+        "<!-- page: 4 --> Section 2.3"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "The strategy's focus on intraday momentum and use of high-frequency data align well with the target project scenario of期货日内单合约交易. However, the strategy's reliance on VWAP and Noise Area boundaries may require adjustments for different markets or data sources.",
+    "adjustments_needed": "The strategy may need to be adjusted to use only historical information for feature calculation, as required by the target project. The VWAP calculation and Noise Area boundaries may also need to be adapted to the specific market and data source used in the project.",
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust",
+    "missing_fields": []
+  },
+  "extensions": [
+    {
+      "hypothesis": "A modified version of the strategy that uses only historical information for feature calculation could be developed for期货日内单合约交易.",
+      "rationale": "The original strategy's reliance on intraday momentum and high-frequency data makes it a good candidate for adaptation to期货日内单合约交易, but adjustments are needed to ensure that all features are calculated using only historical information.",
+      "source_locators": [
+        "<!-- page: 3 --> Section 2.1",
+        "<!-- page: 4 --> Section 2.2"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "The strategy's performance could be improved by incorporating additional filters or overlays based on market regime or volatility.",
+      "rationale": "The study finds that the strategy's performance is regime-dependent, suggesting that additional filters or overlays based on market regime or volatility could improve its robustness.",
+      "source_locators": [
+        "<!-- page: 6 --> Section 4.2",
+        "<!-- page: 15 --> Section 7"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

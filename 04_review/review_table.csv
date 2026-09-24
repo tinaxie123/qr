@@ -1,1 +1,16 @@
 doc_id,batch,reviewer,review_date,status,locator_check,formula_check,hallucination_check,original_adaptation_boundary,missing_fields_check,notes
+doc_01,B,,,machine_fail_human_needed,error,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 硬失败：page-only locator 和章节级 locator 需 repair；暂不进入 Skill 强证据
+doc_02,B,,,machine_pass,machine_pass,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 通过；可作为跨资产制度事件参考；仍需人工抽查
+doc_03,C,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：章节级 locator 与 missing_original_evidence；暂作为弱证据和方法启发
+doc_04,B,,,machine_pass,machine_pass,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 通过；进入失败与稳健性主题；仍需人工抽查
+doc_05,B,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：多个章节/图表级 locator 需人工复核
+doc_06,A,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：章节级 locator 需人工复核；进入主题时标注待复核
+doc_07,A,,,machine_pass,machine_pass,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 通过；进入首轮主题归并；仍需人工抽查
+doc_08,B,,,machine_fail_human_needed,error,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 硬失败：多处 page-only locator；暂不进入主题结论
+doc_09,C,,,machine_fail_human_needed,error,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 硬失败：多处 fabricated_locator；暂不进入主题结论
+doc_10,B,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：extensions 引用未在 original 精确登记；进入主题时标注待复核
+doc_11,B,,,machine_fail_human_needed,error,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 硬失败：fabricated_locator；暂不进入 Skill 强证据
+doc_12,A,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：章节级 locator 需人工复核；公式明确但仍需人工抽查
+doc_13,C,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：missing_original_evidence；公式受损文献需重点人工复核
+doc_14,B,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：missing_original_evidence；作为商品期货展期与流动性迁移参考
+doc_15,B,,,manual_pending,warning,pending_manual,pending_manual,pending_manual,pending_manual,validator v2 warning：missing_original_evidence；作为信号融合与过拟合控制参考

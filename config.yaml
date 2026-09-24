@@ -1,6 +1,5 @@
 # =============================================================
 # 阶段2 文献知识工程 · 流水线配置
-# 所有可调参数集中在此；改流程先改这里，不要写死在代码里。
 # =============================================================
 
 project:
@@ -19,18 +18,16 @@ paths:
   manifest:      manifest.csv
   parsed:        01_parsed/        # MinerU 输出的 markdown，带页码锚点
   chunks:        02_chunks/       # 切片后的 chunks（jsonl）
-  cards:         03_cards/         # DeepSeek V4 输出，每篇一个 JSON
+  cards:         03_cards/         # L2 单篇结构化提取结果 JSON
   review:        04_review/
   review_table:  04_review/review_table.csv
   fixes:         04_review/fixes/  # 退回重抽的历史版本
   topics:        05_topics/       # 3000-5000 字主题归并文档
   skill:         06_skill/
   cases:         07_cases/        # 典型案例
-  reports:       08_reports/      # 给 mentor/复核人的批次报告
   logs:          logs/
   prompts:       logs/prompts/     # 提示词历史版本，不覆盖
-  card_schema:   schemas/research_card.schema.json
-  feature_idea_schema: schemas/research_feature_idea.schema.json
+  extraction_schema: schemas/extraction.schema.json
 
 # ---------- 首轮批次设计 ----------
 batches:
@@ -47,7 +44,7 @@ batches:
     purpose: 冻结提示词后留出评估，检验稳定性，不参与调参
     allow_prompt_edit: false
 
-# ---------- 材料覆盖要求（12 篇应尽量满足） ----------
+# ---------- 材料覆盖要求（15 篇应尽量满足） ----------
 coverage_requirements:
   chinese_research_report: 4      # 中文金工研报
   english_microstructure_paper: 3 # 英文市场微观结构论文
@@ -57,8 +54,10 @@ coverage_requirements:
 
 # ---------- 提取模型 ----------
 model:
-  provider: deepseek
-  model_name: deepseek-v4
+  provider: aliyun_bailian
+  model_name: deepseek-v3
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key_env: BAILIAN_API_KEY
   prompt_version: v1                # 每改一次提示词 +1，旧版存入 logs/prompts/
   system_prompt_file: logs/prompts/system_v1.md
 
@@ -74,7 +73,7 @@ quality_gates:
     forbidden:                      # 三类严重错误，任一出现即退回
       - 把 adaptation/项目判断写成原文结论
       - 原文未说却补全 missing_fields
-      - extensions 不挂 basis_evidence_ids
+      - extensions 不挂 source_locators
   batch_exit:
     severe_errors_max_after_B_C: 1  # 批次 B+C 严重错误 ≤1 篇且已修正
 

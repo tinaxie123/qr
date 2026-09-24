@@ -1,0 +1,112 @@
+{
+  "doc_id": "doc_12",
+  "metadata": {
+    "title": "可转债定价与套利策略初探 CRR二叉树",
+    "authors": [
+      "任瞳",
+      "王武蕾",
+      "梁雨辰"
+    ],
+    "publication_year": 2022
+  },
+  "original": {
+    "research_scenario": {
+      "description": "可转债定价与套利策略研究，重点探讨CRR二叉树模型在可转债定价中的应用及基于DELTA对冲的波动率套利策略。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 1"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "可转债同时具备债性和股性，内嵌强赎、下修和回售条款，定价难度高。CRR二叉树模型通过逆向推导和条款修正实现定价。",
+      "source_locators": [
+        "<!-- page: 4 --> Section 1.1"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "CRR二叉树定价",
+        "formula": "V(i,j) = max[V(i,j)_{EU}, S(i,j)]",
+        "variables": [
+          {
+            "symbol": "V(i,j)",
+            "meaning": "节点(i,j)的转债价值"
+          },
+          {
+            "symbol": "S(i,j)",
+            "meaning": "节点(i,j)的正股价格"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> Section 1.1 STEP3"
+        ]
+      },
+      {
+        "name": "DELTA计算",
+        "formula": "DELTA_{CRR} = \\frac{V_{CRR}(S + \\Delta S) - V_{CRR}(S - \\Delta S)}{2\\Delta S}",
+        "variables": [
+          {
+            "symbol": "\\Delta S",
+            "meaning": "正股价格微小变动量"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 10 --> Section 1.2.3"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "使用10年期国债利率作为无风险利率，正股近12个月股息率，近3个月年化波动率，债项评级下的信用利差。",
+      "source_locators": [
+        "<!-- page: 7 --> Table 2"
+      ]
+    },
+    "testing_methods": {
+      "description": "对比CRR模型与BSM/BAW模型的定价误差，通过历史回测验证套利策略表现。",
+      "source_locators": [
+        "<!-- page: 7 --> Section 1.2.1"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "CRR模型在2015-2016年误差较大，因存量转债数量少；融券对冲策略受限于标的范围和费率成本。",
+      "source_locators": [
+        "<!-- page: 8 --> Figure 3",
+        "<!-- page: 18 --> Section 2.2.3"
+      ]
+    },
+    "tradability": {
+      "description": "融券对冲策略年化收益7.06%，最大回撤4.33%；期货对冲策略年化10.79%，最大回撤12.55%。",
+      "source_locators": [
+        "<!-- page: 13 --> Table 4",
+        "<!-- page: 20 --> Table 10"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "可转债套利策略需正股对冲，与期货日内交易场景差异较大。DELTA计算和波动率特征可能部分适用于高频波动率交易。",
+    "adjustments_needed": "需将DELTA计算调整为基于日内高频数据，并替换对冲工具为期货合约。需验证高频下波动率预测的有效性。",
+    "missing_fields": [
+      "日内高频波动率数据",
+      "实时信用利差数据"
+    ],
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "将CRR模型的波动率输入替换为高频已实现波动率，可能提升日内定价精度。",
+      "rationale": "原文显示波动率参数对模型精度关键，高频数据可捕捉短期波动特征。",
+      "source_locators": [
+        "<!-- page: 7 --> Table 2"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "利用DELTA值的日内变化构建均值回归信号。",
+      "rationale": "原文DELTA计算显示对价格变动敏感，高频场景下可能捕捉短期失衡。",
+      "source_locators": [
+        "<!-- page: 10 --> Section 1.2.3"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

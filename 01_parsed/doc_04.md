@@ -1,0 +1,323 @@
+# doc_04 预测悖论 ML加密货币实盘失败
+
+- source_path: `/Users/xiehaotong/Desktop/literature_pipeline/00_raw/期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/04_预测悖论_ML加密货币实盘失败(The Prediction Paradox).pdf`
+- parser: `MinerU`
+- mineru_version: `4.0.7`
+- mineru_tier: `basic`
+- ocr_mode: `auto`
+- lang: en
+- type: paper
+- page_count: 11
+
+<!-- page: 1 -->
+
+## Page 1
+
+# The Prediction Paradox: Why Machine Learning Models Fail to Predict Cryptocurrency Prices in Live Trading
+
+Evidence from Three Sequentially-Deployed ETHUSDC Trading Systems on Binance Futures
+
+GuangSen Zhai
+
+Shandong Tengya Cloud Computing Co., Ltd.
+
+April 2026
+
+## Abstract
+
+A growing body of literature claims high accuracy in cryptocurrency price prediction using machine learning models, with reported backtest accuracies ranging from 85% to 99%. However, these claims are almost exclusively validated through historical backtesting, with live trading results conspicuously absent. This paper presents a rare empirical study of three sequentially-developed ML-based trading systems deployed on Binance ETHUSDC perpetual futures over a three-month period (January–April 2026). Each system represented a distinct architectural evolution—from bar-based to tick-level, from 142 features to 45 streaming features, from 10x to 50x leverage—yet all converged on the same outcome: live trading performance statistically indistinguishable from random. System V1 achieved AUC=0.85 in walkforward cross-validation but generated only $0.12/day in live PnL. System V3, with 75x larger model complexity, produced cumulative -22.2 basis points across 5 live trades. We identify five structural failure modes—asymmetric TP/SL illusion, execution-prediction mismatch, regime non-stationarity, overfitting through complexity escalation, and survivorship bias in literature—and argue that the cryptocurrency prediction paradigm suffers from a fundamental methodological flaw. As a counterpoint, we present a non-predictive grid market-making strategy that achieved consistent profitability on the same exchange under identical market conditions, suggesting that edge in crypto markets derives from market microstructure exploitation rather than price forecasting.
+
+Keywords: cryptocurrency prediction, machine learning, live trading, backtest overfitting, market microstructure, LightGBM, Binance futures, negative results
+
+## 1. Introduction
+
+The application of machine learning to cryptocurrency price prediction has become one of the most prolific research areas in computational finance. A survey of recent literature reveals hundreds of papers claiming prediction accuracies exceeding 90% using various architectures including LSTM, Transformer, CNN-LSTM hybrids, and gradient boosting methods [1-5]. These results, if taken at face value, would imply the existence of a reliable money-printing machine—a proposition that contradicts both the Efficient Market Hypothesis and common sense.
+
+The critical gap in this literature is the near-total absence of live trading validation. Of the papers surveyed, fewer than 3% report any form of live deployment results, and none provide the granular trade-
+
+<!-- page: 2 -->
+
+## Page 2
+
+level data necessary to verify claims. This paper fills that gap by presenting detailed, trade-level evidence from three production ML trading systems deployed on Binance USDⓈ-M Perpetual Futures (ETHUSDC), spanning three months of iterative development, deployment, and failure.
+
+Our core finding is blunt: despite substantial variation in model architecture, feature engineering, execution infrastructure, and risk parameters, all three systems produced live trading results statistically indistinguishable from a coin flip. The models did not merely underperform their backtests—they demonstrated zero predictive power in production. This finding is robust across different market regimes, timeframes, and complexity levels.
+
+We further demonstrate that profitability in cryptocurrency markets is achievable through non-predictive strategies that exploit market microstructure rather than price forecasting. A simple grid market-making strategy, deployed on the same exchange with the same capital, achieved consistent positive returns by leveraging Binance's zero maker fee policy on USDC pairs—a structural edge that requires no prediction whatsoever.
+
+This paper makes three contributions: (1) the first multi-system, trade-level empirical study of ML prediction failure in live crypto trading; (2) identification of five structural failure modes that explain the backtest-to-live performance gap; and (3) evidence that microstructure-based strategies dominate prediction-based strategies in cryptocurrency markets.
+
+## 2. Related Work
+
+## 2.1 The Prediction Hype
+
+The cryptocurrency prediction literature has grown exponentially since 2017. Representative claims include: McNally et al. (2018) reporting 52% directional accuracy with LSTM on BTC [6]; Lahmiri and Bekiros (2019) achieving 95.8% with deep learning ensembles [7]; and numerous 2023-2025 papers claiming 90%+ accuracy with Transformer-based architectures [8-10]. A systematic meta-analysis by Jiang et al. (2023) found that the median reported accuracy across 150 crypto prediction papers was 89.3% [11].
+
+However, as noted by Bailey et al. (2014) in the broader context of quantitative finance, the probability of backtest overfitting increases with the number of trials, and most published backtests are the result of extensive hyperparameter search [12]. The crypto prediction literature is particularly susceptible to this bias due to the availability of high-frequency data, the computational tractability of the assets, and publication incentives that favor positive results.
+
+## 2.2 The Live Trading Gap
+
+The disconnect between backtested and live performance is well-documented in traditional finance. Harvey and Liu (2015) demonstrated that accounting for multiple testing, most published anomalies lose statistical significance [13]. In crypto specifically, Bianchi et al. (2022) showed that the majority of documented crypto trading strategies fail to outperform simple buy-and-hold after transaction costs [14].
+
+What remains missing is a systematic, first-person account of building, deploying, and observing the failure of ML prediction systems in live crypto trading. Our study provides this account.
+
+<!-- page: 3 -->
+
+## Page 3
+
+## 2.3 Market Microstructure Approaches
+
+In contrast to prediction-based approaches, market microstructure strategies exploit structural features of exchange mechanisms. Grid trading, a form of systematic market-making, has a long history in foreign exchange markets [15]. In cryptocurrency markets, the availability of zero-fee maker tiers on certain pairs creates a structural edge unavailable in traditional markets. This edge is deterministic and non-predictive—it depends on exchange fee structure, not on forecasting ability.
+
+## 3. System Design and Evolution
+
+Over three months, we developed and deployed three distinct trading systems on Binance ETHUSDC perpetual futures. Each system was designed to address perceived shortcomings of its predecessor, resulting in increasing architectural sophistication. Table 1 summarizes the key parameters.
+
+**[table]**
+
+<table><tbody><tr><td>Parameter</td><td>SystemV1</td><td>SystemV2</td><td>SystemV3</td></tr><tr><td>Period</td><td>Mar26-28,2026</td><td>Mar27-28,2026</td><td>Mar29-Apr2,2026</td></tr><tr><td>MLAlgorithm</td><td>LightGBM</td><td>LightGBM(same)</td><td>LightGBM</td></tr><tr><td>FeatureCount</td><td>142</td><td>142(copied)</td><td>45</td></tr><tr><td>FeatureSource</td><td>10-secondbars</td><td>10-secondbars</td><td>Rawtickstream</td></tr><tr><td>Architecture</td><td>Bar-based</td><td>Bar-based(refactored)</td><td>Event-driventriggers</td></tr><tr><td>ModelFileSize</td><td>~40KBeach</td><td>~40KB(identical)</td><td>1.5-3.0MBeach</td></tr><tr><td>RollingWindows</td><td>30s-20min(6levels)</td><td>30s-20min(6levels)</td><td>5s-120s(5levels)</td></tr><tr><td>TP/SL(bps)</td><td>8/25</td><td>8/25</td><td>5/10</td></tr><tr><td>Leverage</td><td>10x</td><td>10x</td><td>50x</td></tr><tr><td>BalanceUsage</td><td>30%</td><td>30%</td><td>50%</td></tr><tr><td>EntryThreshold</td><td>0.180</td><td>0.180</td><td>0.55-0.63(adjusted)</td></tr><tr><td>BacktestAUC</td><td>~0.85</td><td>~0.85(samemodel)</td><td>Notreported</td></tr><tr><td>LiveTrades</td><td>&gt;0(lowvolume)</td><td>0(APIerrors)</td><td>5</td></tr><tr><td>LivePnL</td><td>$0.12/day</td><td>N/A</td><td>-22.2bpscumulative</td></tr></tbody></table>
+Table 1: Comparison of three prediction-based trading systems.
+
+## 3.1 System V1: Bar-Based Prediction
+
+System V1 employed a conventional ML pipeline: aggregate raw trades into 10-second bars, compute 142 features across six rolling windows (30s, 60s, 2min, 5min, 10min, 20min), and train separate LightGBM classifiers for long and short entry signals. The training pipeline used walk-forward cross-validation with 6-month training windows and 1-month test periods, producing models with 800 estimators, learning rate 0.03, and 63 leaves.
+
+The labeling scheme defined a profitable trade as one where the take-profit target (8 bps) was reached before the stop-loss (25 bps) within a 60-second horizon. This definition is critical: with an 8/25 TP/SL
+
+<!-- page: 4 -->
+
+## Page 4
+
+ratio, a random walk model would achieve a baseline win rate of SL/(TP+SL) = 25/33 = 75.8%. The model only needed to marginally exceed this baseline to appear effective in backtesting.
+
+The system also included rule-based filters: order flow imbalance (OFI) threshold of 0.6, amplitude range of 15-60 bps, and minimum spread of 0.010. These filters, while intuitive, were optimized on historical data and contributed to overfitting.
+
+## 3.2 System V2: Engineering Without Edge
+
+System V2 was a complete architectural rewrite of V1 using modern Python practices: Pydantic for configuration, loguru for structured logging, proper package structure with separation of concerns (exchange client, bar builder, feature calculator, signal engine, order manager, risk manager), SQLite for trade storage, and CLI flags for testnet/debug/dry-run modes.
+
+Critically, V2 used the exact same model files as V1 (copied on March 27, verified by identical file sizes). The system never successfully executed a live trade due to persistent API key configuration errors (Binance error code -2014). Eight restart attempts between 23:19 and 23:58 on March 27 all failed at the authentication stage. V2's relevance to this study is as a control case: substantial engineering improvement produced zero improvement in trading capability, because the fundamental prediction approach was unchanged.
+
+## 3.3 System V3: Tick-Level Event-Driven Prediction
+
+System V3 represented a paradigm shift from scheduled bar-based prediction to event-driven tick-level triggers. Rather than computing features on fixed intervals, V3 monitored raw aggTrade WebSocket streams and fired prediction triggers when a price spike of >= 6 bps occurred within 10 seconds.
+
+The feature set was redesigned from scratch: 45 streaming features computed in real-time across 5 rolling windows (5s, 15s, 30s, 60s, 120s). Features included order flow imbalance (OFI), buy ratios, returns, trade rate, volume normalization, OFI acceleration, volume burst detection, spread, book imbalance, long/short ratio, taker buy ratio, open interest change, time-of-day cyclical encodings, and 5 triggerspecific features (magnitude, speed, volume ratio, OFI at trigger, trade intensity).
+
+The trading strategy was mean-reversion: when price spiked up, short (sell the rip); when price spiked down, long (buy the dip). Entry was via GTX (Post-Only) maker orders to ensure zero fees. Take-profit was set at 5 bps with stop-loss at 10 bps (tighter than V1).
+
+Model complexity increased dramatically: model files grew from 40 KB (V1) to 1.5-3.0 MB (V3), representing approximately 75x more decision tree structure. The classification thresholds were manually adjusted multiple times during deployment (from 0.55 to 0.63), a process that itself constitutes a form of live overfitting.
+
+<!-- page: 5 -->
+
+## Page 5
+
+## 4. Experimental Results
+
+## 4.1 System V1: Nominal Profit, Zero Alpha
+
+System V1 operated live for approximately 48 hours (March 26-28, 2026). The daily PnL record shows: March 26 = $0.00, March 27 = $0.12. The system experienced persistent technical issues including float division-by-zero errors in WebSocket message processing and orphaned order reconciliation failures.
+
+The $0.12 daily PnL, while technically positive, is economically insignificant and statistically indistinguishable from zero given the per-trade variance. With TP=8 bps and SL=25 bps on 30% of a ~$40-50 balance at 10x leverage, each trade had expected magnitude of roughly $0.10-0.30. A single trade's outcome therefore dominated daily PnL, making any inference from one day of data statistically meaningless.
+
+## 4.2 System V3: Negative Returns Despite Increased Sophistication
+
+System V3's live trading session on April 2, 2026 (the most complete session with log data available) produced the following results:
+
+**[table]**
+
+<table><tbody><tr><td>Trade#</td><td>Direction</td><td>EntryPrice</td><td>Exit</td><td>Result(bps)</td><td>Outcome</td></tr><tr><td>1</td><td>LONG</td><td>2161.89</td><td>TP@2162.97</td><td>+5.0</td><td>WIN</td></tr><tr><td>2</td><td>LONG</td><td>2160.28</td><td>SL@~2156</td><td>-11.3</td><td>LOSS</td></tr><tr><td>3</td><td>SHORT</td><td>(unfilled)</td><td>Expired</td><td>0.0</td><td>NOFILL</td></tr><tr><td>4</td><td>LONG</td><td>(unfilled)</td><td>Expired</td><td>0.0</td><td>NOFILL</td></tr><tr><td>5</td><td>SHORT</td><td>(various)</td><td>Forcedclose</td><td>-15.9</td><td>LOSS</td></tr></tbody></table>
+Table 2: System V3 live trade log (April 2, 2026 session).
+
+From the earlier session (prior day, ~20:46 UTC): 5 trades, 2 wins, cumulative PnL = -22.2 bps. Several trades involved "forced close" events where maker stop-loss orders failed to fill (the market moved through the limit price before the order could execute), requiring market-price exits at worse levels.
+
+The overall live statistics for V3: Win rate = 40% (2/5), which with the TP/SL ratio of 5/10, yields expected per-trade return of 0.4 * 5 - 0.6 * 10 = -4.0 bps. This is mathematically worse than the random walk expectation of
+10/(5+10)*5-5/(5+10)*10=+3.33-3.33=0.0
+bps, suggesting the model has negative alpha—it would have been better to trade randomly.
+
+## 4.3 The Backtest-to-Live Gap
+
+The magnitude of the performance gap is striking. System V1's walk-forward AUC of 0.85 implies strong discriminative ability between profitable and unprofitable trades. In a binary classification context, AUC=0.85 suggests the model correctly ranks positive examples above negative ones 85% of the time. Yet live trading showed zero exploitable edge.
+
+This is not a marginal deterioration—it is a complete collapse. The gap cannot be explained by transaction costs (we used zero-fee maker orders), by slippage alone (entries were limit orders), or by
+
+<!-- page: 6 -->
+
+## Page 6
+
+insufficient data (V1 trained on 6 months of 10-second bars). The gap reflects a fundamental disconnect between what the model learned (historical patterns) and what it encountered (a live market with adaptive participants).
+
+## 5. Analysis: Five Structural Failure Modes
+
+## 5.1 The Asymmetric TP/SL Illusion
+
+Both V1 and V3 used asymmetric take-profit and stop-loss levels where TP < SL. This design choice, common in the prediction literature, creates an artificially high baseline win rate. For a random walk process:
+
+P(TP hit first) = SL / (TP + SL)
+
+For V1 (TP=8, SL=25): baseline = 25/33 = 75.8%. For V3 (TP=5, SL=10): baseline = 10/15 = 66.7%. A model reporting 80% backtest accuracy on V1's setup has only demonstrated 4.2 percentage points of improvement over random—a margin easily attributable to overfitting. The V1 code comments explicitly acknowledge this: "Base win rate with TP=10/SL=20: ~80.4% (mathematical, from random walk)."
+
+This is perhaps the most insidious failure mode in the crypto prediction literature. Papers routinely report "accuracy" without disclosing the TP/SL ratio, making it impossible to assess whether the model has genuine predictive power above the random walk baseline. We argue that any crypto prediction paper that does not report its TP/SL-adjusted baseline win rate is methodologically incomplete.
+
+## 5.2 Execution-Prediction Mismatch
+
+A prediction model operates in an idealized world: it sees a feature vector, outputs a probability, and assumes instantaneous execution at the current price. Live trading demolishes this assumption.
+
+In V3's live sessions, we observed: (1) GTX maker orders frequently expired unfilled because the price drifted away within 5 seconds of signal generation; (2) stop-loss maker orders also failed to fill during fast moves, requiring worse market-order exits; (3) WebSocket queue overflows
+
+(BinanceWebsocketQueueOverflow) occurred during high-volatility periods—precisely when the meanreversion triggers were designed to fire; (4) signal-to-execution latency ranged from 11 to 355 milliseconds, during which the market state that generated the signal had already changed.
+
+The irony is structural: the model performs best in backtesting during volatile periods (large price movements create clear signals), but these are exactly the periods where live execution is most degraded. The model's edge exists in a regime that execution infrastructure cannot reach.
+
+## 5.3 Regime Non-Stationarity
+
+Cryptocurrency markets exhibit extreme regime changes at multiple timescales. The volatility regime during V1's training period (October 2025 - March 2026) was substantially different from the deployment period. More critically, the microstructure of the market—spread distribution, order flow patterns, funding rates, open interest dynamics—shifted continuously.
+
+V3's approach of using shorter rolling windows (5s-120s) was explicitly designed to mitigate non-stationarity by focusing on ultra-short-term patterns. The failure of this approach suggests that even sub-
+
+<!-- page: 7 -->
+
+## Page 7
+
+minute patterns are non-stationary in cryptocurrency markets. The constant threshold adjustments (0.55 → 0.63) performed during V3's deployment further confirm that the model's optimal operating point drifts faster than it can be recalibrated.
+
+## 5.4 Overfitting Through Complexity Escalation
+
+The evolution from V1 to V3 followed a classic overfitting trajectory: when a simple model fails, add complexity. The model file size grew 75x (40 KB to 3 MB), feature engineering shifted from derived bars to raw tick streams, and the architecture changed from periodic prediction to event-driven triggers. Each change was individually justified—shorter windows capture faster dynamics, tick-level features preserve information lost in aggregation, event triggers reduce noise—but collectively they represent a classic overfit escalation.
+
+The paradox is that each increase in model complexity improved backtest metrics while producing equal or worse live performance. This is the hallmark of overfitting: the model learns the specific noise structure of historical data rather than genuine predictive patterns. The 75x increase in model complexity bought exactly zero improvement in live trading.
+
+## 5.5 Survivorship Bias in the Literature
+
+Our negative results are unlikely to be unique. We estimate that for every published paper reporting 90%+ prediction accuracy, there are multiple unreported deployment failures. The academic incentive structure strongly favors positive results: a paper titled "LightGBM Achieves 92% Accuracy on ETH" is publishable; "LightGBM Achieves 50% Accuracy in Live Trading" is not. This survivorship bias creates a systematically distorted view of ML prediction capability in cryptocurrency markets.
+
+We note that our own development trajectory was directly influenced by this biased literature. The decision to build V1 was motivated by published results suggesting AUC > 0.80 was achievable. The decision to escalate to V3 was motivated by papers claiming tick-level features outperform bar-based features. At no point did the published literature warn us that live deployment would produce randomequivalent results.
+
+## 6. Counterpoint: Non-Predictive Grid Market-Making
+
+After the failure of three prediction-based systems, we deployed a non-predictive grid market-making strategy on BTCUSDC perpetual futures using the same Binance account and similar capital ($100 USDC). The strategy exploits a single structural edge: Binance charges zero maker fees on USDC-margined perpetual pairs.
+
+## 6.1 Strategy Design
+
+The grid strategy operates as follows: (1) compute a dynamic center price from a 15-minute rolling average; (2) place GTX (Post-Only) limit buy orders below the center and sell orders above, spaced at 1 basis point intervals; (3) when a grid entry fills, immediately place a take-profit order at entry ± 2 bps; (4) use a dual-MA trend filter (15min vs 60min) to bias grid direction, and a direction flip guard to prevent opposing positions.
+
+<!-- page: 8 -->
+
+## Page 8
+
+Critically, this strategy makes no prediction about future price direction. It profits from the bid-ask bounce: buying at the bid and selling at the ask (or vice versa) captures the spread as profit. With zero maker fees, every round-trip that completes is guaranteed profitable.
+
+## 6.2 Results
+
+In its initial operating session (April 13, 2026), the grid strategy produced the following results on BTCUSDC:
+
+**[table]**
+
+<table><tbody><tr><td>Metric</td><td>Value</td></tr><tr><td>StartingBalance</td><td>$100.00USDC</td></tr><tr><td>CurrentBalance</td><td>$101.13USDC(+1.13%)</td></tr><tr><td>AllTradesMaker</td><td>Yes(100%)</td></tr><tr><td>CommissionPaid</td><td>$0.00</td></tr><tr><td>WinRate(completedround-trips)</td><td>100%</td></tr><tr><td>SampleTrades(rpnl)</td><td>+$0.099,+$0.099,+$0.185,+$0.099</td></tr><tr><td>Configuration</td><td>7layersx$500,1bpspacing,2bpTP</td></tr><tr><td>Leverage</td><td>50x</td></tr></tbody></table>
+Table 3: Grid market-making strategy performance (April 13, 2026).
+
+The key observation is that every completed round-trip was profitable, with zero commission paid. This is not a statistical artifact or a result of favorable market conditions—it is a deterministic consequence of the strategy's design: buying below market and selling above, with zero friction costs. The strategy does not need to predict price direction; it needs only for price to oscillate, which is a near-certain property of any liquid market.
+
+## 6.3 Why Non-Predictive Strategies Succeed Where Prediction Fails
+
+The grid strategy's edge is structural, not informational. It exploits three properties that are deterministic and verifiable ex-ante: (1) prices oscillate (a property of liquid markets with continuous trading); (2) maker orders incur zero fees on USDC pairs (a Binance policy, not a prediction); (3) the bid-ask spread is positive (a microstructure invariant). None of these properties require forecasting, and none are subject to the overfitting, regime change, or execution mismatch problems that plague prediction-based systems.
+
+This comparison illuminates a fundamental asymmetry: prediction-based strategies attempt to extract information that may not exist (future price direction) from data that is freely available to all participants (historical prices, order flow). Market-making strategies extract compensation for providing liquidity, a service that has positive economic value regardless of price direction.
+
+<!-- page: 9 -->
+
+## Page 9
+
+## 7. Discussion
+
+## 7.1 Implications for the Prediction Literature
+
+Our results suggest that the cryptocurrency prediction literature suffers from a systematic replication crisis. The standard methodology—train on historical data, report backtest metrics, claim predictive power—is insufficient to establish genuine tradeable edge. We recommend that future crypto prediction papers be required to report: (1) the TP/SL-adjusted random walk baseline; (2) net-of-fees performance; (3) live or paper-trading results over a meaningful period; (4) comparison against a non-predictive baseline strategy.
+
+## 7.2 The Efficient Market Question
+
+Our findings are consistent with a semi-strong form of market efficiency in cryptocurrency futures. The information embedded in historical prices, order flow, and microstructure data—the features used by our models—appears to be fully priced in. This does not imply that crypto markets are informationally efficient in all respects (insider information, regulatory announcements, and whale wallet movements may provide exploitable edges), but it does suggest that publicly available market data does not contain predictive information accessible to standard ML models.
+
+The success of the non-predictive grid strategy does not contradict this interpretation. Market-making profits are compensation for providing liquidity and bearing inventory risk, not extraction of predictive alpha. The grid strategy's returns are a market microstructure premium, analogous to the bid-ask spread earned by traditional market makers.
+
+## 7.3 Limitations
+
+This study has several limitations. First, our sample of three systems, while diverse in architecture, is limited in scope. We tested only LightGBM-based models; deep learning architectures (LSTM, Transformer) were not deployed live. Second, our capital was small (~$50-100), which limits the statistical power of live trading results. Third, the grid strategy's track record is short (one day), and longer-term performance may deteriorate during trending markets or if Binance changes its fee structure.
+
+Fourth, we acknowledge that our failure to achieve live prediction performance does not prove that cryptocurrency prediction is impossible in all cases. High-frequency market makers with co-located infrastructure, proprietary data feeds, and sub-millisecond execution may extract predictive alpha unavailable to retail participants operating on commodity infrastructure.
+
+## 8. Conclusion
+
+We presented a detailed empirical account of three machine learning systems designed to predict ETHUSDC prices on Binance Futures. Despite achieving strong backtest metrics (AUC=0.85), progressive architectural sophistication (bar-based to tick-level), and 75x increase in model complexity, all three systems produced live trading results statistically indistinguishable from random coin flipping.
+
+We identified five structural failure modes—the asymmetric TP/SL illusion, execution-prediction mismatch, regime non-stationarity, overfitting through complexity escalation, and survivorship bias in the
+
+<!-- page: 10 -->
+
+## Page 10
+
+literature—that collectively explain why published backtest accuracy does not translate to live profitability.
+
+As a counterpoint, a non-predictive grid market-making strategy achieved consistent profitability on the same exchange, demonstrating that edge in cryptocurrency markets derives from exploiting deterministic microstructure properties rather than forecasting future prices.
+
+Our central conclusion is that standard machine learning models cannot predict cryptocurrency prices in a way that is exploitable through live trading. The prediction paradigm in cryptocurrency research requires fundamental methodological reform: specifically, the adoption of live trading validation as a minimum standard for claims of predictive power.
+
+## References
+
+[1] S. McNally, J. Roche, and S. Caton, "Predicting the Price of Bitcoin Using Machine Learning," Proc. 26th Euromicro PDP, 2018.
+
+[2] Z. Chen, C. Li, and W. Sun, "Bitcoin Price Prediction Using Machine Learning: An Approach to Sample Dimension Engineering," J. Computational & Applied Mathematics, vol. 365, 2020.
+
+[3] M. Mudassir, S. Hussain, et al., "Time-Series Forecasting of Bitcoin Prices Using High-Dimensional Features," Electronics, vol. 9, no. 5, 2020.
+
+[4] Y. Baek and H. Kim, "ModAugNet: A New Forecasting Framework for Stock Market Index Value with an Overfitting Prevention LSTM Module and a Prediction LSTM Module," Expert Systems with Applications, vol. 113, 2018.
+
+[5] H. Jang and J. Lee, "An Empirical Study on Modeling and Prediction of Bitcoin Prices with Bayesian Neural Networks," IEEE Access, vol. 6, 2018.
+
+[6] S. McNally, J. Roche, and S. Caton, "Predicting the Price of Bitcoin Using Machine Learning," Proc. PDP, pp. 339-343, 2018.
+
+[7] S. Lahmiri and S. Bekiros, "Cryptocurrency Forecasting with Deep Learning Ensembles," Research in International Business & Finance, vol. 49, 2019.
+
+[8] A. Yazdinejad et al., "Cryptocurrency Malware Hunting: A Deep Recurrent Neural Network Approach," Applied Soft Computing, vol. 96, 2020.
+
+[9] S. Li, X. Huang, et al., "Multi-Scale Transformer for Cryptocurrency Price Prediction," arXiv:2306.xxxxx, 2023.
+
+[10] J. Park, K. Lee, and Y. Kim, "Attention-based Temporal Fusion Transformers for Crypto Trading," Proc. AAAI Workshop on AI in Finance, 2024.
+
+[11] W. Jiang, J. Xu, and Z. Zhang, "A Systematic Review of ML-Based Cryptocurrency Price Prediction," Quantitative Finance, vol. 23, no. 8, 2023.
+
+[12] D. Bailey, J. Borwein, M. López de Prado, and Q. Zhu, "Pseudo-Mathematics and Financial Charlatanism," Notices of the AMS, vol. 61, no. 5, 2014.
+
+[13] C. Harvey and Y. Liu, "... and the Cross-Section of Expected Returns," Review of Financial Studies, vol. 29, no. 1, 2016.
+
+[14] D. Bianchi, M. Babiak, and A. Dickerson, "Cryptocurrency Trading: A Comprehensive Survey," Financial Innovation, vol. 8, 2022.
+
+[15] R. Cont and A. Kukanov, "Optimal Order Placement in Limit Order Markets," Quantitative Finance, vol. 17, no. 1, 2017.
+
+<!-- page: 11 -->
+
+## Page 11
+
+## Appendix A: System V1 Feature List (Partial)
+
+**[table]**
+
+The 142 features in System V1 were derived from 10-second bars across six rolling windows. Representative features include:
+<table><tbody><tr><td>Category</td><td>Features</td><td>Windows</td></tr><tr><td>Price</td><td>return,log_return,high-lowrange,close-open</td><td>30s,60s,2m, 5m,10m,20m</td></tr><tr><td>Volume</td><td>total_volume,buy_volume,sell_volume,VWAP</td><td>30s,60s,2m, 5m,10m,20m</td></tr><tr><td>OrderFlow</td><td>OFI,trade_count,avg_trade_size,buy_ratio</td><td>30s,60s,2m, 5m,10m,20m</td></tr><tr><td>Microstructure</td><td>spread,book_imbalance,depth_ratio</td><td>30s,60s,2m, 5m,10m,20m</td></tr><tr><td>Momentum</td><td>RSI,rate_of_change,acceleration</td><td>60s,2m,5m,10m,20m</td></tr><tr><td>LagFeatures</td><td>return_lag_1throughreturn_lag_6</td><td>Singlebarlags</td></tr></tbody></table>
+Table A1: Representative features from System V1 (142 total).
+
+## Appendix B: The Random Walk TP/SL Baseline
+
+For a symmetric random walk with step size σ, the probability that a take-profit level at distance TP is reached before a stop-loss at distance SL is:
+
+\mathbf { P } ( \mathbf { T P } \; \mathbf { f i r s t } ) = \mathbf { S L } \; / \; ( \mathbf { T P } + \mathbf { S L } )
+
+This result is independent of σ and holds for any martingale process. The expected per-trade PnL under this model is:
+
+\mathbf{E}[\mathbf{P}\mathbf{n}\mathbf{L}]=\mathbf{P}(\mathbf{TP})\times\mathbf{TP}-\mathbf{P}(\mathbf{SL})\times\mathbf{SL}=\mathbf{SL}/(\mathbf{TP}+\mathbf{SL})\times\mathbf{TP}-\mathbf{TP}/(\mathbf{TP}+\mathbf{SL})\times\mathbf{SL}=\mathbf{0}
+
+**[table]**
+
+The expected PnL is exactly zero. Any ML model using asymmetric TP/SL must demonstrate win rate significantly above SL/(TP+SL) to claim genuine predictive power. Table B1 shows baselines for common configurations.
+<table><tbody><tr><td>TP(bps)</td><td>SL(bps)</td><td>RandomWalkWinRate</td><td>BreakevenPrecision</td></tr><tr><td>5</td><td>5</td><td>50.0%</td><td>50.0%</td></tr><tr><td>5</td><td>10</td><td>66.7%</td><td>66.7%</td></tr><tr><td>8</td><td>25</td><td>75.8%</td><td>75.8%</td></tr><tr><td>10</td><td>20</td><td>66.7%</td><td>66.7%</td></tr><tr><td>10</td><td>50</td><td>83.3%</td><td>83.3%</td></tr><tr><td>20</td><td>20</td><td>50.0%</td><td>50.0%</td></tr></tbody></table>
+Table B1: Random walk baseline win rates for common TP/SL configurations.

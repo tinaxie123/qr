@@ -1,0 +1,386 @@
+{
+  "doc_id": "doc_09",
+  "metadata": {
+    "title": "筹码分布因子系统构建",
+    "authors": [
+      "陈升锐",
+      "姚紫薇"
+    ],
+    "publication_year": 2025
+  },
+  "original": {
+    "research_scenario": {
+      "description": "基于分钟级量价数据构建股票的筹码分布，发掘出筹码分布、筹码集中度、筹码换手、筹码盈利四大类因子。",
+      "source_locators": [
+        "<!-- page: 1 --> 核心观点"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "筹码分布反映股票在不同价格区间内的持仓成本分布情况，帮助判断支撑位、压力位以及主力资金的动向。",
+      "source_locators": [
+        "<!-- page: 1 --> 核心观点"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "筹码加权平均成本",
+        "formula": "mean_{t} = \\sum (price_{i,t} * p_{i,t})",
+        "variables": [
+          {
+            "symbol": "price_{i,t}",
+            "meaning": "第i个价位的价格"
+          },
+          {
+            "symbol": "p_{i,t}",
+            "meaning": "第i个价位的筹码占比"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "筹码成本加权标准差",
+        "formula": "std_{t} = \\sqrt{\\sum (price_{i,t} - mean_{t})^{2} * p_{i,t}}",
+        "variables": [
+          {
+            "symbol": "price_{i,t}",
+            "meaning": "第i个价位的价格"
+          },
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          },
+          {
+            "symbol": "p_{i,t}",
+            "meaning": "第i个价位的筹码占比"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "筹码分布偏度",
+        "formula": "skewness_{t} = \\sum \\left(\\frac{price_{i,t} - mean_{t}}{std_{t}}\\right)^{3} * p_{i,t}",
+        "variables": [
+          {
+            "symbol": "price_{i,t}",
+            "meaning": "第i个价位的价格"
+          },
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          },
+          {
+            "symbol": "std_{t}",
+            "meaning": "筹码成本加权标准差"
+          },
+          {
+            "symbol": "p_{i,t}",
+            "meaning": "第i个价位的筹码占比"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "筹码分布峰度",
+        "formula": "kurtosis_{t} = \\sum \\left(\\frac{price_{i,t} - mean_{t}}{std_{t}}\\right)^{4} * p_{i,t}",
+        "variables": [
+          {
+            "symbol": "price_{i,t}",
+            "meaning": "第i个价位的价格"
+          },
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          },
+          {
+            "symbol": "std_{t}",
+            "meaning": "筹码成本加权标准差"
+          },
+          {
+            "symbol": "p_{i,t}",
+            "meaning": "第i个价位的筹码占比"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "筹码分布变异系数",
+        "formula": "coeff_of_var_{t} = \\frac{std_{t}}{mean_{t}}",
+        "variables": [
+          {
+            "symbol": "std_{t}",
+            "meaning": "筹码成本加权标准差"
+          },
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "相对价位",
+        "formula": "CKDP_{t} = \\frac{close_{t} - mean_{t}}{Chip_Highest_{t} - Chip_Lowest_{t}}",
+        "variables": [
+          {
+            "symbol": "close_{t}",
+            "meaning": "收盘价"
+          },
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          },
+          {
+            "symbol": "Chip_Highest_{t}",
+            "meaning": "筹码最高价"
+          },
+          {
+            "symbol": "Chip_Lowest_{t}",
+            "meaning": "筹码最低价"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "成本带宽",
+        "formula": "CBW_{t} = \\frac{Chip_Highest_{t} - Chip_Lowest_{t}}{Chip_Lowest_{t}}",
+        "variables": [
+          {
+            "symbol": "Chip_Highest_{t}",
+            "meaning": "筹码最高价"
+          },
+          {
+            "symbol": "Chip_Lowest_{t}",
+            "meaning": "筹码最低价"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "成本重心",
+        "formula": "CKDW_{t} = \\frac{mean_{t} - Chip_Lowest_{t}}{Chip_Highest_{t} - Chip_Lowest_{t}}",
+        "variables": [
+          {
+            "symbol": "mean_{t}",
+            "meaning": "筹码加权平均成本"
+          },
+          {
+            "symbol": "Chip_Highest_{t}",
+            "meaning": "筹码最高价"
+          },
+          {
+            "symbol": "Chip_Lowest_{t}",
+            "meaning": "筹码最低价"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 5 --> 2.1.1 筹码分布统计因子构建框架"
+        ]
+      },
+      {
+        "name": "筹码穿透率",
+        "formula": "PTR_2_{t} = \\frac{当月股票最高价与最低价之间筹码占比}{turnover_{t}}",
+        "variables": [
+          {
+            "symbol": "turnover_{t}",
+            "meaning": "当天换手率"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 15 --> 4.1.1 筹码换手因子构建框架"
+        ]
+      },
+      {
+        "name": "账面总盈利",
+        "formula": "PG_{i,t} = SUM(IF(p \\leq close_{i,t}, Chip_{i,t,p} * (close_{i,t} - p), 0))",
+        "variables": [
+          {
+            "symbol": "close_{i,t}",
+            "meaning": "收盘价"
+          },
+          {
+            "symbol": "Chip_{i,t,p}",
+            "meaning": "价格为p的筹码峰"
+          },
+          {
+            "symbol": "p",
+            "meaning": "价格"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      },
+      {
+        "name": "账面总亏损",
+        "formula": "PL_{i,t} = SUM(IF(p > close_{i,t}, Chip_{i,t,p} * (p - close_{i,t}), 0))",
+        "variables": [
+          {
+            "symbol": "close_{i,t}",
+            "meaning": "收盘价"
+          },
+          {
+            "symbol": "Chip_{i,t,p}",
+            "meaning": "价格为p的筹码峰"
+          },
+          {
+            "symbol": "p",
+            "meaning": "价格"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      },
+      {
+        "name": "当天新增筹码总盈利",
+        "formula": "TG_{i,t} = SUM(IF(p \\leq close_{i,t}, Vol_{i,t,p} * (close_{i,t} - p) * T_{i,t}, 0))",
+        "variables": [
+          {
+            "symbol": "close_{i,t}",
+            "meaning": "收盘价"
+          },
+          {
+            "symbol": "Vol_{i,t,p}",
+            "meaning": "价格为p的成交量"
+          },
+          {
+            "symbol": "T_{i,t}",
+            "meaning": "换手率"
+          },
+          {
+            "symbol": "p",
+            "meaning": "价格"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      },
+      {
+        "name": "当天新增筹码总亏损",
+        "formula": "TL_{i,t} = SUM(IF(p > close_{i,t}, Vol_{i,t,p} * (p - close_{i,t}) * T_{i,t}, 0))",
+        "variables": [
+          {
+            "symbol": "close_{i,t}",
+            "meaning": "收盘价"
+          },
+          {
+            "symbol": "Vol_{i,t,p}",
+            "meaning": "价格为p的成交量"
+          },
+          {
+            "symbol": "T_{i,t}",
+            "meaning": "换手率"
+          },
+          {
+            "symbol": "p",
+            "meaning": "价格"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      },
+      {
+        "name": "当天新增筹码盈利占比",
+        "formula": "TGRatio_{i,t} = \\frac{TG_{i,t}}{PG_{i,t}}",
+        "variables": [
+          {
+            "symbol": "TG_{i,t}",
+            "meaning": "当天新增筹码总盈利"
+          },
+          {
+            "symbol": "PG_{i,t}",
+            "meaning": "账面总盈利"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      },
+      {
+        "name": "当天新增筹码亏损占比",
+        "formula": "TLRatio_{i,t} = \\frac{TL_{i,t}}{PL_{i,t}}",
+        "variables": [
+          {
+            "symbol": "TL_{i,t}",
+            "meaning": "当天新增筹码总亏损"
+          },
+          {
+            "symbol": "PL_{i,t}",
+            "meaning": "账面总亏损"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 17 --> 5.1.1 筹码盈利因子构建框架"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "提取股票分钟级前复权收盘价、成交量，以及日频流通换手率数据。计算股票每日分钟级量价分布情况。",
+      "source_locators": [
+        "<!-- page: 6 --> 1.2 筹码分布构建"
+      ]
+    },
+    "testing_methods": {
+      "description": "回测时间: 2009年12月-2024年7月；样本池:全市场；股票筛选:剔除在调仓日的停牌、涨跌停、上市未满半年和ST股票；调仓时间:月频调仓；因子处理:极值处理、缺失值处理、中性化处理。",
+      "source_locators": [
+        "<!-- page: 8 --> 1.3 因子测试框架"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "筹码因子在中证1000与中证500等中小市值股票中表现优于含大市值股票的中证800及沪深300。",
+      "source_locators": [
+        "<!-- page: 1 --> 筹码因子在主要宽基指数样本池内的绩效表现"
+      ]
+    },
+    "tradability": {
+      "description": "筹码因子整体上与传统大类因子的相关性较低，具备良好的互补性。",
+      "source_locators": [
+        "<!-- page: 31 --> 九、总结和思考"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "筹码因子在中小市值股票中表现较好，适用于期货日内单合约交易，尤其是小市值合约。",
+    "adjustments_needed": "需要调整因子计算频率为日内级别，并使用期货合约的分钟级数据进行计算。",
+    "missing_fields": [
+      "期货合约的分钟级成交量数据",
+      "期货合约的换手率数据"
+    ],
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "基于筹码集中度因子构建日内级别的筹码集中度指标，用于期货日内交易。",
+      "rationale": "筹码集中度因子在股票市场中表现优异，可以应用于期货市场中的日内交易策略。",
+      "source_locators": [
+        "<!-- page: 11 --> 3.2.1 𝒄𝐡𝒊𝒑_𝒅𝒊𝒔𝒕𝒓𝒊系列因子"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "基于筹码盈利因子构建日内级别的筹码盈利指标，用于期货日内交易。",
+      "rationale": "筹码盈利因子在股票市场中表现优异，可以应用于期货市场中的日内交易策略。",
+      "source_locators": [
+        "<!-- page: 19 --> 5.2.1 筹码盈利因子绩效表现汇总"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

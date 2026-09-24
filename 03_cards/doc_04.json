@@ -1,0 +1,97 @@
+{
+  "doc_id": "doc_04",
+  "metadata": {
+    "title": "The Prediction Paradox: Why Machine Learning Models Fail to Predict Cryptocurrency Prices in Live Trading",
+    "authors": [
+      "GuangSen Zhai"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "Three ML-based trading systems deployed on Binance ETHUSDC perpetual futures over a three-month period (January–April 2026). Each system represented a distinct architectural evolution—from bar-based to tick-level, from 142 features to 45 streaming features, from 10x to 50x leverage.",
+      "source_locators": [
+        "<!-- page: 1 --> Abstract",
+        "<!-- page: 3 --> Section 3"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "The study identifies five structural failure modes: asymmetric TP/SL illusion, execution-prediction mismatch, regime non-stationarity, overfitting through complexity escalation, and survivorship bias in literature.",
+      "source_locators": [
+        "<!-- page: 6 --> Section 5"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "Random Walk TP/SL Baseline",
+        "formula": "\\mathbf { P } ( \\mathbf { T P } \\; \\mathbf { f i r s t } ) = \\mathbf { S L } \\; / \\; ( \\mathbf { T P } + \\mathbf { S L } )",
+        "variables": [
+          {
+            "symbol": "TP",
+            "meaning": "Take-profit level"
+          },
+          {
+            "symbol": "SL",
+            "meaning": "Stop-loss level"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 11 --> Appendix B"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "System V1: aggregate raw trades into 10-second bars, compute 142 features across six rolling windows (30s, 60s, 2min, 5min, 10min, 20min). System V3: 45 streaming features computed in real-time across 5 rolling windows (5s, 15s, 30s, 60s, 120s).",
+      "source_locators": [
+        "<!-- page: 3 --> Section 3.1",
+        "<!-- page: 4 --> Section 3.3"
+      ]
+    },
+    "testing_methods": {
+      "description": "Walk-forward cross-validation with 6-month training windows and 1-month test periods. Live trading validation on Binance ETHUSDC perpetual futures.",
+      "source_locators": [
+        "<!-- page: 3 --> Section 3.1",
+        "<!-- page: 5 --> Section 4"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "All three systems produced live trading results statistically indistinguishable from random. System V1 achieved AUC=0.85 in walkforward cross-validation but generated only $0.12/day in live PnL. System V3 produced cumulative -22.2 basis points across 5 live trades.",
+      "source_locators": [
+        "<!-- page: 1 --> Abstract",
+        "<!-- page: 5 --> Section 4.2"
+      ]
+    },
+    "tradability": {
+      "description": "The models demonstrated zero predictive power in production. A non-predictive grid market-making strategy achieved consistent profitability on the same exchange under identical market conditions.",
+      "source_locators": [
+        "<!-- page: 1 --> Abstract",
+        "<!-- page: 7 --> Section 6"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "The study's findings on ML prediction failure in live trading are highly relevant to our project, as it highlights the challenges of applying predictive models to high-frequency trading scenarios. The non-predictive grid market-making strategy's success suggests that microstructure-based approaches may be more suitable for our target scenario.",
+    "adjustments_needed": "For our project, we would need to focus on microstructure features and non-predictive strategies, similar to the grid market-making approach. The asymmetric TP/SL illusion and execution-prediction mismatch issues identified in the study must be carefully considered in our design.",
+    "missing_fields": [],
+    "data_sufficiency": "sufficient",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "A non-predictive grid market-making strategy with dynamic center price computation and zero maker fees could be adapted for our single-contract futures trading scenario.",
+      "rationale": "The study demonstrates that such strategies can achieve consistent profitability by exploiting deterministic microstructure properties, which aligns with our project's constraints.",
+      "source_locators": [
+        "<!-- page: 7 --> Section 6"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "Incorporating ultra-short-term rolling windows (5s-120s) for feature computation could capture faster dynamics relevant to our high-frequency trading scenario.",
+      "rationale": "The study's System V3 attempted this approach, though it failed due to other issues. The concept of focusing on ultra-short-term patterns is still relevant for our project.",
+      "source_locators": [
+        "<!-- page: 4 --> Section 3.3"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

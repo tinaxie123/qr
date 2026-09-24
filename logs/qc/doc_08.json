@@ -1,0 +1,14 @@
+{
+  "doc_id": "doc_08",
+  "mineru_version": "4.0.7",
+  "ocr_mode": "auto",
+  "tier": "basic",
+  "source_file": "/Users/xiehaotong/Desktop/literature_pipeline/00_raw/期货日内因子_精选文献15篇/02_中文_日内量价与选股/08_量价指纹模型迭代_行为选股与条件风格(ML选股二).pdf",
+  "output_markdown": "/Users/xiehaotong/Desktop/literature_pipeline/01_parsed/doc_08.md",
+  "page_count_rendered": 39,
+  "block_count": 513,
+  "char_count": 53984,
+  "started_at": "2026-09-24T05:56:22.449132+00:00",
+  "finished_at": "2026-09-24T05:58:26.870222+00:00",
+  "warnings": []
+}

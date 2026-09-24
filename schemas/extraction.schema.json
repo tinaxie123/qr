@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "extraction.schema.json",
+  "title": "Research Extraction",
+  "description": "单篇金融工程与市场微观结构文献的结构化提取结果",
+  "type": "object",
+  "required": ["doc_id", "metadata", "original", "adaptation", "extensions"],
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "description": "文献唯一标识符"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "authors": { "type": "array", "items": { "type": "string" } },
+        "publication_year": { "type": "integer" }
+      }
+    },
+    "original": {
+      "type": "object",
+      "description": "原文事实区，只记录文献直接说过的内容",
+      "required": [
+        "research_scenario",
+        "economic_mechanism",
+        "feature_formulas",
+        "data_processing",
+        "testing_methods",
+        "robustness_and_failures",
+        "tradability"
+      ],
+      "properties": {
+        "research_scenario": { "$ref": "#/$defs/textBlockWithLocators" },
+        "economic_mechanism": { "$ref": "#/$defs/textBlockWithLocators" },
+        "data_processing": { "$ref": "#/$defs/textBlockWithLocators" },
+        "testing_methods": { "$ref": "#/$defs/textBlockWithLocators" },
+        "robustness_and_failures": { "$ref": "#/$defs/textBlockWithLocators" },
+        "tradability": { "$ref": "#/$defs/textBlockWithLocators" },
+        "feature_formulas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "formula", "source_locators"],
+            "properties": {
+              "name": { "type": "string" },
+              "formula": { "type": "string", "description": "LaTeX 格式公式" },
+              "variables": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "symbol": { "type": "string" },
+                    "meaning": { "type": "string" }
+                  }
+                }
+              },
+              "source_locators": { "$ref": "#/$defs/sourceLocators" }
+            }
+          }
+        }
+      }
+    },
+    "adaptation": {
+      "type": "object",
+      "description": "面向本项目场景的适配判断，不是原文结论",
+      "required": ["project_fit", "adjustments_needed", "data_sufficiency", "replication_mode"],
+      "properties": {
+        "project_fit": { "type": "string" },
+        "adjustments_needed": { "type": "string" },
+        "missing_fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "本项目复现所缺失的数据字段"
+        },
+        "data_sufficiency": {
+          "type": "string",
+          "enum": ["sufficient", "partial", "insufficient"]
+        },
+        "replication_mode": {
+          "type": "string",
+          "enum": ["direct", "adjust", "infeasible"]
+        }
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "description": "基于本文证据提出的扩展假设。L2 只要求挂本文 source_locators，跨文献 evidence_id 在 L3 以后回填。",
+      "items": {
+        "type": "object",
+        "required": ["hypothesis", "source_locators"],
+        "properties": {
+          "hypothesis": { "type": "string" },
+          "rationale": { "type": "string" },
+          "source_locators": { "$ref": "#/$defs/sourceLocators" },
+          "basis_evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "L2 留空数组，L3 建立跨文献证据库后回填"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sourceLocators": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "textBlockWithLocators": {
+      "type": "object",
+      "required": ["description", "source_locators"],
+      "properties": {
+        "description": { "type": "string" },
+        "source_locators": { "$ref": "#/$defs/sourceLocators" }
+      }
+    }
+  }
+}

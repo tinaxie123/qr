@@ -1,0 +1,121 @@
+{
+  "doc_id": "doc_15",
+  "metadata": {
+    "title": "FOF 跨资产量化配置体系（一）:基于风险平价与时序因子增强的宏观配置策略",
+    "authors": [
+      "熊鹰",
+      "许怡然"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "本报告在等风险贡献（ERC）组合基础上，引入价值、动量、Carry 与波动率管理四类时序因子，将其方向信号等权融合，经 tanh 归一化与波动率翻译机制转化为月度权重偏移，并设满仓与现金两种运作模式。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 报告要点"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "在大类资产配置中，有两个问题是绕不开的:“配什么”，以及“什么时候配”。前者是在资产层面挑出足够优质、彼此相关性足够低的标的；后者是在已选定资产的前提下做时序上的择时。",
+      "source_locators": [
+        "<!-- page: 4 --> Section 一、资产配置现状与改善路径"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "权重偏移公式",
+        "formula": "\\Delta w_{i,t} = \\operatorname{tanh} \\left( \\frac{1}{4} \\sum_{f=1}^{4} S_{f,i,t} \\right) \\frac{\\mathrm{TargetVol}}{\\sigma_{i,t}^{\\mathrm{clipped}}}",
+        "variables": [
+          {
+            "symbol": "\\Delta w_{i,t}",
+            "meaning": "资产i在时间t的权重偏移"
+          },
+          {
+            "symbol": "S_{f,i,t}",
+            "meaning": "因子f在资产i上的标准化方向信号"
+          },
+          {
+            "symbol": "\\mathrm{TargetVol}",
+            "meaning": "目标波动率"
+          },
+          {
+            "symbol": "\\sigma_{i,t}^{\\mathrm{clipped}}",
+            "meaning": "资产i的年化波动率经分位带截断后的值"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 15 --> Section （一）从信号到权重偏移的核心公式"
+        ]
+      },
+      {
+        "name": "波动率截断公式",
+        "formula": "\\sigma_{i,t}^{ clipped } = \\left\\{ \\begin{aligned} P_{ low }(t), & \\quad \\sigma_{i,t} < P_{ low }(t) \\\\ P_{ high }(t), & \\quad \\sigma_{i,t} > P_{ high }(t) \\\\ \\sigma_{i,t}, & \\quad  否则  \\end{aligned} \\right.",
+        "variables": [
+          {
+            "symbol": "P_{ low }(t)",
+            "meaning": "资产历史波动率的下分位"
+          },
+          {
+            "symbol": "P_{ high }(t)",
+            "meaning": "资产历史波动率的上分位"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 15 --> Section （一）从信号到权重偏移的核心公式"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "固收标的的选择，是本框架与多数风险平价研究的关键区别。在数据处理上，债券 ETF存在上市时间差异:十年国债 ETF（国泰）2017 年 8 月后方有连续报价，而 2009 至 2017 年间该类 ETF 尚未上市。为覆盖完整回测区间，本报告对早期区间采用其对标的上证十年国债（净价）指数，以指数收益率反推、拼接出一条连续的可投资债券净值序列。",
+      "source_locators": [
+        "<!-- page: 7 --> Section （一）资产池与可投资标的"
+      ]
+    },
+    "testing_methods": {
+      "description": "全样本回测中，满仓版年化收益 5.79%、夏普 1.14，现金版年化收益 4.63%、夏普 1.16，均较纯 ERC 底盘（4.36%、1.04）实现稳健改善，回撤可控；现金版在全部60 组参数组合下战胜基准的格点占比达 35%，样本外过拟合落差仅 0.134。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 报告要点"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "在宏观大类资产配置层级，不存在在任意市场环境下均能稳定盈利的主动择时因子。因子的有效性具有强烈的体制依赖特征，必然经历与之不匹配的失效区间。",
+      "source_locators": [
+        "<!-- page: 6 --> Section （三）时序因子择时的长周期属性与失效区间"
+      ]
+    },
+    "tradability": {
+      "description": "市场上部分风险平价研究采用中债综合财富全价指数作为债券底层，但该指数包含极其稳定的票息滚存，且不含任何交易摩擦、买卖价差、ETF 跟踪误差与流动性约束——它在性质上是一条'理论财富线'，无法被真实资金直接复制。",
+      "source_locators": [
+        "<!-- page: 5 --> Section （二）风险平价高夏普的两大来源:样本窗口与回测口径"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "该研究主要针对跨资产配置，使用月度再平衡和宏观因子，与期货日内单合约交易的高频场景差异较大。但其因子构造和信号融合机制可能对日内交易有启发意义。",
+    "adjustments_needed": "需要将因子信号的计算频率从月度调整为日内或分钟级别，并考虑高频数据的特性（如微观结构噪声、流动性影响等）。此外，波动率管理和趋势过滤机制需要适应更短的时间尺度。",
+    "missing_fields": [
+      "高频流动性指标",
+      "日内订单流数据"
+    ],
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "将价值因子中的均值回归逻辑应用于日内交易，通过计算短期价格偏离其日内均值的程度来生成交易信号。",
+      "rationale": "原文中的价值因子基于长期均值回归，但在高频场景下，短期价格也可能呈现均值回归特性。",
+      "source_locators": [
+        "<!-- page: 9 --> Section （一）价值因子:均值回归"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "将动量因子中的趋势跟踪逻辑调整为超短期（如5分钟）动量，可能捕捉日内趋势。",
+      "rationale": "原文中的动量因子在不同资产上使用不同时间窗口，商品采用短窗口（21日），这提示短周期动量可能有效。",
+      "source_locators": [
+        "<!-- page: 10 --> Section （二）动量因子:趋势跟踪"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

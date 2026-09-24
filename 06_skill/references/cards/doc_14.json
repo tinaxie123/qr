@@ -1,0 +1,106 @@
+{
+  "doc_id": "doc_14",
+  "metadata": {
+    "title": "商品期限结构 展期规律统计与时点优化",
+    "authors": [
+      "李东擎",
+      "李苏横"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "研究2010年以来国内活跃商品期货的主力合约切换记录，构建2990次换月事件，考察主力合约月份、换月时点、成交量与持仓量迁移，以及年化展期收益率在换月窗口内的变化。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 报告要点"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "商品期货合约具有到期交割的特征，投资者需要在原合约临近到期前平仓并在更远月份合约上重新建立头寸。展期时点会影响价差损益、交易成本和持仓执行效果。",
+      "source_locators": [
+        "<!-- page: 4 --> Section 一、商品期货展期"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "年化展期收益率",
+        "formula": "Yield_{n,d} = [\\ln(P_{n}) - \\ln(P_{d})] * \\frac{365}{N_{d} - N_{n}}",
+        "variables": [
+          {
+            "symbol": "P_{n}",
+            "meaning": "近月合约价格"
+          },
+          {
+            "symbol": "P_{d}",
+            "meaning": "远月合约价格"
+          },
+          {
+            "symbol": "N_{n}",
+            "meaning": "近月合约距离交割日期的天数"
+          },
+          {
+            "symbol": "N_{d}",
+            "meaning": "远月合约距离交割日期的天数"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 11 --> Section 六、展期收益率"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "选择活跃品种作为研究对象，定义为过去一年全合约口径日均成交量不低于2万手、且截至样本末仍持续满足该标准的品种。主力合约识别规则为：当某一合约的成交量和持仓量同时为当日最大时，将其判定为主力合约。",
+      "source_locators": [
+        "<!-- page: 4 --> Section 二、活跃商品品种",
+        "<!-- page: 6 --> Section 三、主力合约月份分布"
+      ]
+    },
+    "testing_methods": {
+      "description": "统计各品种历史上主力切换时点距交割月的月数分布，以及展期日前10个交易日至展期日后10个交易日窗口内展入与展出合约的成交量和持仓量相对变化。",
+      "source_locators": [
+        "<!-- page: 8 --> Section 四、主力合约展期时点分布",
+        "<!-- page: 10 --> Section 五、展期过程合约流动性变动"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "样本筛选可能带来生存者偏差，全品种均值可能掩盖品种之间的差异，按展期日收益率正负分组也可能产生一定的条件选择偏差。",
+      "source_locators": [
+        "<!-- page: 15 --> Section 七、总结"
+      ]
+    },
+    "tradability": {
+      "description": "展期日前10个交易日至展期日附近构成较为重要的移仓观察窗口，展入合约已经形成一定流动性，而展出合约的流动性尚未完全衰减，为分批移仓和控制市场冲击提供了条件。",
+      "source_locators": [
+        "<!-- page: 15 --> Section 七、总结"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "该研究对期货日内单合约交易有参考价值，特别是关于展期时点和流动性迁移的分析可以帮助优化日内交易策略。",
+    "adjustments_needed": "需要调整展期收益率的计算方式，以适应日内高频数据。同时，需要考虑日内交易的成本和流动性限制。",
+    "missing_fields": [
+      "日内高频数据",
+      "交易成本数据"
+    ],
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "在日内交易中，可以利用展期日前后的流动性迁移规律，设计基于成交量变化的交易信号。",
+      "rationale": "原文指出展期日前展入合约的成交量和持仓量已经开始逐步增加，展出合约仍然维持较高的交易活跃度，这为日内交易提供了流动性变化的信号。",
+      "source_locators": [
+        "<!-- page: 10 --> Section 五、展期过程合约流动性变动"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "根据展期日收益率正负分组的不同路径，可以设计不同的日内交易策略。",
+      "rationale": "原文发现Backwardation组和Contango组在展期窗口内呈现不同的变化路径，这可以用于指导日内交易的方向选择。",
+      "source_locators": [
+        "<!-- page: 12 --> Section 六、展期收益率"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+# doc_10 噪声Alpha环境下信号筛选与分散化 学海拾珠282
+
+- source_path: `/Users/xiehaotong/Desktop/literature_pipeline/00_raw/期货日内因子_精选文献15篇/02_中文_日内量价与选股/10_噪声Alpha环境下信号筛选与分散化(学海拾珠282).pdf`
+- parser: `MinerU`
+- mineru_version: `4.0.7`
+- mineru_tier: `basic`
+- ocr_mode: `auto`
+- lang: zh
+- type: research_report
+- page_count: 18
+
+<!-- page: 1 -->
+
+## Page 1
+
+华安证券 HUAAN SECURITIES
+
+eRptType] 金融工程专题报告
+
+# 噪声 Alpha 环境下的信号筛选与分散化
+
+# ——“学海拾珠”系列之二百八十二
+
+T bl _R D ] 报告日期:2026-08-26
+
+[Table_Author] 分析师:严佳炜
+
+执业证书号:S0010520070001
+
+邮箱:yanjw@hazq.com
+
+分析师:钱静闲
+
+执业证书号:S0010522090002
+
+邮箱:qianjx@hazq.com
+
+## [Table_C 相关报告
+
+1.《ORCA:基于跨资产相关性网络谱特征的市场涨跌检测与交易策略—— “学海拾珠”系列之二百八十一》
+
+2.《月内动量周期——“学海拾珠”系列之二百八十》
+
+3.《基于 LPPLS 模型的美股七巨头泡沫与系统性风险研究——学海拾珠系列之二百七十九》
+
+4.《使用机器学习分析顶尖基金的持仓——“学海拾珠”系列之二百七十八》
+
+5.《HANET:基于层次化混合频率注意力模型的宏观感知时间序列预测— —“学海拾珠”系列之二百七十七》6.《基金财务报表信息能预测未来业绩吗？——“学海拾珠”系列之二百七十六》
+
+## 主要观点:
+
+_Summary] 本篇是“学海拾珠”系列第二百八十二篇。文献在 Yan and Zheng (2017)数据挖掘框架下，利用逾 18,000 个基本面信号考察组合构建中“严格筛选”与“分散化”的权衡，发现尽管零信号普遍存在，仅保留统计上最显著信号的组合，其样本外表现反而不及广泛纳入弱信号的分散化组合。
+
+## ⚫ 研究方法
+
+1、以 Compustat 与 CRSP 1963–2023 年数据，按 Yan and Zheng (2017)方法由 76 种财务比率×240 个会计变量构造逾 18,000 个基本面信号，构建市值加权的十分位多空信号组合。
+
+2、采用两阶段设计:样本内用 240 个月滚动窗口估计 CAPM 与 FF6 alpha 及 p 值，按 28 个 p 值阈值分组；样本外固定 beta、组内等权，评估后续 12 个月的 alpha、残差风险与信息比率。
+
+3、以 Storey (2002)插值估计与 Chen (2025) Easy FDP 上界诊断虚假发现的普遍程度，并用 Dybvig–Ross (1985)回归检验分散化分组相对最严格分组（p≤0.1%）的增量 alpha。
+
+## ⚫ 文献主要结论
+
+证券研究报告
+
+1、虚假发现普遍:约 80%的信号为零信号；在传统 5%阈值下，Easy FDP 上界约 41%–44%，Storey 直接估计约 33%–36%，即便0.1%阈值下也有 8%–10%。
+
+2、严格筛选表现最差:p≤0.1%分组的样本外信息比率最低（CAPM 0.42、FF6 0.91），纳入全部信号反而更高（0.48、0.94）；信息比率峰值出现在 p≤6%（CAPM）与 p≤9%（FF6），远高于 FDR控制所倡导的阈值。
+
+3、Dybvig–Ross 检验显示分散化分组相对最严格基准均有正的增量 alpha，FF6 下 3%以上阈值均在 1%水平显著；等权聚合大量信号相当于隐性收缩与正则化，并可通过交易抵消降低换手。
+
+4、2003 年后 FF6 alpha 降至此前约三成，但零信号比例反而下降，说明是特质性机会随市场效率提升而消退，而非虚假发现增加；统计推断与组合构建目标不同，FDR 控制规则对组合构建过于严格。
+
+## ⚫ 风险提示
+
+文献结论基于历史数据与海外文献进行总结；不构成任何投资建议。
+
+敬请参阅末页重要声明及评级说明
+
+<!-- page: 2 -->
+
+## Page 2
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+## 正文目录
+
+1 引言 .... ........................................................................................................................................... 4
+2 数据与信号构建.
+2.1 数据来源.. ............................................................................................................................................................. ..6
+2.2 信号组合.. ............................................................................................................................................................. 6
+3
+3.1 基于 P 值阈值的组合分组.. .................................................................................................. 6
+3.2 错误发现比例（FDP）诊断 .............. .............................................................................................................................. 7
+3.3 样本外表现比较:分散化与严格筛选 . .............................................................................................................. 8
+4
+4.1 描述性统计 ...........................................................................................................................
+4.2 样本内诊断 .. ............................................................................................................................................................ 10
+4.3 样本外组合表现... ...................................................................................................................... ... 11
+4.3.1 样本外信息比率. .................................................................................................... .. 11
+4.3.2 分散化的增量收益. .................................................................................. .. 13
+4.4 动态变化..... ....................................................................................................................................... ... 14
+5
+6 结论 ...............
+风险提示: .......................................................................................................................................... .... 17
+
+敬请参阅末页重要声明及评级说明
+
+2 / 18
+
+<!-- page: 3 -->
+
+## Page 3
+
+证券研究报告
+
+华安证券 HUAAN RESEARCH
+
+金融工程
+
+## 图表目录
+
+图表 1 文章框架.
+图表 2 样本描述性统计.
+图表 3 样本内 ALPHA 的描述性统计. 9
+图表 4 CAPM 与 FF6 ALPHA 的 P 值经验分布
+图表 5 样本内诊断:零信号比例与真实 ALPHA 信号数量 1 0
+图表 6 不同 P 值阈值下的错误发现比例 . 11
+图表 7 各分组经 CAPM 调整的样本外表现 . 12
+图表 8 各分组经 FF6 调整的样本外表现. . 12
+图表 9 分散化的增量收益:DYBVIG–ROSS (1985)回归 . 13
+图表 10 分散化的增量收益 . 14
+图表 11 2003 年前后的动态变化 . 15
+图表 12 经 CAPM 与 FF6 调整的累计对数收益 . 15
+
+敬请参阅末页重要声明及评级说明
+
+3 / 18
+
+<!-- page: 4 -->
+
+## Page 4
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+## 1 引言
+
+图表 1 文章框架
+
+## 数据与信号构建
+
+两阶段检验框架阶段一(样本内训练):1984年起每年年初，用240个月滚动窗口估计 CAPM/FF6 alpha 与 Newey-West p 值，按28个p值阈值(0.1%…100%)划分信号分组阶段二(样本外检验):依样本内alpha 符号统一方向，组内等权、固定 beta，评估后续12个月的 alpha、残差风险与信息比率(1984-2023)
+
+## 主要发现
+
+## 结论与启示
+
+统计推断目标≠组合构建目标:FDR控制针对个体假设检验，对组合而言纳入零信号并不必然有害；等权聚合大量信号相当于隐性收缩与正则化，可稳定权重、提高信息比率并通过交易抵消降低换手一一分散化优于严格筛选
+
+资料来源:华安证券研究所整理
+
+实证资产定价文献记录了大量基于公司特征的收益预测变量。早期研究关注少数具有明确经济动机的异象，而后续研究大幅扩展了预测变量的范围，形成了Cochrane (2011)所称的“因子动物园”（factor zoo）。这一扩张引发了激烈争论:这些已被记录的预测变量究竟反映了关于预期收益的真实信息，还是源于多重检验与数据挖掘？
+
+争论中的一个重要分支强调虚假发现（false discoveries）的作用。Harvey et al. (2016)指出，在同时检验大量预测变量时，传统统计阈值会严重低估假阳性的概率，因此建议采用非常严格的显著性标准来控制错误发现率（FDR）。具体而言，他们主张新发现的收益预测变量的 t 统计量应超过 3（|t|>3），对应双侧 p 值低于 0.27%，某些情形下甚至应采用更严格的阈值。Chordia et al. (2020)得出了类似结论，建议横截面收益可预测性的门槛为|t|>3.4，对应 p≤0.07%。这些观点对实证资产定价研究产生了重要影响。
+
+敬请参阅末页重要声明及评级说明
+
+4 / 18
+
+<!-- page: 5 -->
+
+## Page 5
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+与此同时，另一些研究质疑基于统计推断的筛选规则是否与样本外收益预测的目标相一致。Yan and Zheng (2017)利用大规模数据挖掘程序，由会计变量构造了超过 18,000 个财务比率（“基本面信号”），发现其中相当一部分能产生统计显著的alpha（本文中的 alpha 均指组合经基准因子调整后的平均收益，而非统计显著性水平）。该方法最大限度减少了研究者的主观裁量，为研究高维环境下的信号筛选提供了天然的实验场。后续研究发现，许多未能通过严格 FDR 阈值的预测变量仍保留了样本外预测能力（如 Chen, 2021, 2024, 2025；Chen et al., 2020；Chen and Zimmermann, 2022；Jacobs and Müller, 2020；Chinco et al., 2021；Jensen et al., 2023）。更广泛地，Chen (2024, 2025)告诫不应将统计上不显著等同于经济上无关，并指出严格的 FDR 控制可能会丢弃那些单个来看较弱、但合在一起具有信息含量的预测变量。
+
+综合来看，这些文献表明实证环境比“真信号”与“假信号”的简单二分法更为模糊。该文献将这种环境称为“混杂环境”（
+brackish
+）:弱预测信号与纯噪声并存，二者难以精确分离。在这种环境下，预测变量单个来看可能无法达到严格的统计阈值，但聚合后仍能对组合表现做出贡献。这一视角与统计学和机器学习中更广泛的一支文献相呼应:即便单个预测变量难以与噪声区分，通过分散化、模型平均、收缩与正则化对大量弱的或含噪的预测变量进行聚合，仍可以提升预测表现（如 Li et al., 2018；Giannone et al., 2021；Peng and Yang, 2022；Liao et al., 2024；Shen and Xiu, 2025）。
+
+本文从组合构建的视角研究混杂环境下的信号筛选，关注不同筛选规则如何影响由大量预测变量构成的组合的样本外表现。本文并不在假设检验意义上检验单个预测变量是否“为真”，而是考察一种权衡:只保留统计显著的信号，还是保留包括大量弱信号和零信号在内的更广泛的预测变量集合。本文的重点不在于验证个别异象或厘清因子动物园的经济解释，而在于组合层面的结果。
+
+证券研究报告
+
+方法上，本文以 Yan and Zheng (2017)的数据挖掘框架为基础，由基本面信号构建多空组合，并相对于 CAPM 和 Fama–French 六因子（FF6）模型（Fama and French, 2016, 2018）等标准资产定价基准评估组合表现。之所以同时采用两个基准，是因为 FF6 中的盈利与投资因子有助于解释许多与会计变量相关的异象，但 FF6 模型本身是为解释已发现的收益规律而事后构建的；为提供一个更符合历史情境的基准，本文也报告相对于 CAPM 的结果。为评估虚假发现，本文同时报告 Storey (2002)的错误发现比例（FDP）估计——该方法由 Barras et al. (2010)首次引入金融领域— —以及 Chen (2025)提出的“Easy FDP 上界”。同时报告两种度量有助于透明地评估零信号的普遍程度，并将基于推断的诊断结果直接与组合结果联系起来。需要区分的是，零信号（null signals）指真实 alpha 为零的信号，而虚假发现指通过了显著性阈值的零信号；一个信号可以是零信号但并非虚假发现，虚假发现是相对于所选阈值而言的。
+
+实证分析得到三个主要发现。第一，与多重检验文献一致，虚假发现十分普遍:样本内统计显著的
+alpha
+中，有相当比例可能是虚假的。第二，只保留最显著信号的组合，其样本外表现差于纳入更广泛预测变量的组合。以信息比率（alpha 除以残差风险，与 t 值密切相关）衡量，相对于 CAPM，样本外信息比率在 p 值阈值约 6%（保留 14%的可用信号）处达到最高，并随着筛选趋严而下降。第三，组合信息比率对零信号的比例相对不敏感。例如，纳入全部数据挖掘信号的组合，其信息比率高于限定在 0.1%严格 p 值阈值下的组合，尽管前者约 80%的信号都是零信号。
+
+这些结果与 Harvey et al. (2016)等面向推断的建议形成对比，原因在于推断与
+
+敬请参阅末页重要声明及评级说明
+
+5 / 18
+
+<!-- page: 6 -->
+
+## Page 6
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+组合构建的目标不同。从组合角度看，重要的是在大量预测变量上的分散化及其对信息比率的影响，而非精确识别单个“真实”alpha。因此，本文不试图解决因子动物园的经济解释问题，也不试图找出一小组“真实”因子，而是研究当预测变量激增对组合构建的困扰小于对统计推断的困扰时，信号筛选规则如何影响组合表现。
+
+在展开分析前，有必要澄清当目标是组合构建而非统计推断时应如何理解 FDR控制。Benjamini and Hochberg (1995)与 Benjamini and Yekutieli (2001)的 FDR 控制框架是为单个假设的统计推断设计的，并非用于优化组合层面的表现。在实证资产定价中，FDR 程序常以极为严格的目标水平应用——如 Harvey et al. (2016)主张的最高 1%的 FDR——实际上是把虚假发现视为代价高昂的经济错误。然而，当信号被组合成分散化的投资组合时，相关的对象不再是单个 alpha 的统计显著性，而是组合的信息比率。从这一角度出发，容忍更高的 FDR 可能是合适的，因为纳入alpha 为零的信号未必损害组合表现。本文的结果表明，为控制
+FDR
+而倡导的筛选规则对组合构建而言可能过于严格，会导致更低的样本外信息比率。
+
+## 2 数据与信号构建
+
+## 2.1 数据来源
+
+本文从 Compustat 获取年度财务报表数据，从 CRSP 获取月度股票收益数据，样本期为 1963–2023 年。样本范围为 NYSE、AMEX 和 NASDAQ 的普通股，剔除金融类公司（一位数 SIC 代码为 6）。样本公司数量在 1990 年代稳步上升，于 1998年达到 3,345 家的峰值，此后持续下降，2019 年降至 1,782 家，与美国上市公司数量下降的趋势一致。在 2022 年组合构建时点，样本包含 1,899 家公司。
+
+基准因子来自 Kenneth French 数据库，具体为 Fama and French (2016, 2018)的六个因子:市场（MKT-RF）、规模（SMB）、价值（HML）、动量（MOM）、盈利（RMW）和投资（CMA）。
+
+## 2.2 信号组合
+
+沿用 Yan and Zheng (2017)的做法，本文实施大规模数据挖掘策略:对 240 个Compustat会计变量中的每一个计算76种财务比率，总计得到超过18,000个信号。每年，对每个信号将股票分为十组，构建多空组合（做多最高十分位、做空最低十分位），并按市值加权。本文聚焦市值加权组合，以强调经济显著性和实际可投资性，而非重新评估或验证已发表的异象。等权策略会过度暴露于小盘股和微型股，其中许多交易成本高或难以卖空；Novy-Marx and Velikov (2016)也提醒，等权组合结果之所以在学术文献中流行，是因为它们通常强于市值加权结果，因此应审慎看待。
+
+本文相对于 CAPM 和 FF6 两个模型估计 alpha。为保证可比性，要求组合至少有 120 个连续月度收益，因此样本略小于 Yan and Zheng (2017)。在 1983 财年末，有 10,910 个信号组合符合条件；自 2005 财年起，每年可用的信号组合超过 15,000个，2015 财年达到 15,270 个的峰值。平均而言，样本每年包含 13,932 个信号组合。
+
+## 3 方法论
+
+## 3.1 基于 p 值阈值的组合分组
+
+敬请参阅末页重要声明及评级说明
+
+6 / 18
+
+<!-- page: 7 -->
+
+## Page 7
+
+证券研究报告
+
+华安证券HUAANRESEARCH
+
+金融工程
+
+本文按样本内 p 值阈值将信号组合划分为若干分组，目的有二:（i）从 p 值的横截面分布中提取多重检验诊断指标；（ii）评估由这些分组构成的组合的样本外表现。分析分两个阶段进行。
+
+阶段一:样本内训练。自 1984 年起，在每个日历年年初，用 240 个月的月度收益滚动窗口估计 alpha，要求至少 120 个连续收益观测。由此得到的估计窗口从1964–1983 年一直延伸至 2003–2022 年。在每个窗口内，本文计算 CAPM 和 FF6 alpha、经 Newey–West 调整的 t 统计量以及双侧 p 值，然后按 p 值阈值将组合归入不同分组。例如，p≤1.0%的分组包含所有 p 值不高于 1.0%的信号组合。本文共考虑 28 个阈值:0.1%、0.2%、…、1.0%、2.0%、…、10%、20%、…、100%。信号组合在每年 6 月末构建并再平衡，而样本内回归在日历年转换时进行。
+
+阶段二:样本外检验。为保证可比性，当样本内 alpha 为负时，将多空头寸反向，从而确保所有信号在样本外评估前都具有正的样本内 alpha，避免任意的符号约定。各分组内的组合等权配置。随后，本文在随后的 12 个月内（1984–2023 年）评估样本外 alpha、残差风险和信息比率（及对应的 t 值），其中 beta 固定为样本内估计值，以减轻前视偏差。
+
+信息比率（information ratio，也称评价比率，Treynor and Black, 1973）定义为
+\hat { \alpha } / \hat { \omega }
+，其中𝛼̂为月度 alpha 估计值，𝜔̂为相对于基准因子模型的残差风险（残差标准差）。本文以年化信息比率评估多空零净投资信号组合的表现。对应的 t 值为𝑡 =
+( \hat { \alpha } / \hat { \omega } ) \sqrt { T }
+，𝑇为时间序列观测数；二者略有差异，因为 t 值经过了异方差调整，而信息比率未作调整。
+
+## 3.2 错误发现比例（FDP）诊断
+
+阶段一给出了 p 值的横截面分布。例如，在 5%的 p 值阈值下
+( p \leq 5\% )
+，平均约有 12%的可用信号组合表现出统计显著的 alpha。本文利用该分布构建错误发现比例（FDP）的诊断界。需要说明的是，相关统计假设并非样本外组合表现结果所必需，而只是用来刻画统计环境。
+
+记
+{ \boldsymbol { \cdot } } { \boldsymbol { p } } _ { i }
+为信号组合𝑖的估计 p 值，其真实 alpha 为
+\alpha _ { i } , \quad i = 1 , \ldots , m
+，𝑚为信号总数。沿用 Storey (2002)，本文将零信号的比例估计为:
+
+\hat { \pi } _ { 0 } : = \underset { \lambda \in \varLambda } { \operatorname* { m i n } } \hat { \pi } _ { 0 } ( \lambda ) , \qquad \hat { \pi } _ { 0 } ( \lambda ) : = \frac { \# \{ p _ { i } > \lambda \} } { ( 1 - \lambda )   m }
+
+其中
+\# \{ p _ { i } > \lambda \}
+为 p 值超过𝜆的信号组合数量。该估计量依赖于一个识别性限制:零信号的 p 值在接近 1 处必须渐近服从均匀分布，从而当𝜆 → 1时
+\hat { \pi } _ { 0 } ( \lambda ) \rightarrow \pi _ { 0 }
+（Genovese and Wasserman, 2004）。因此，本文将
+\hat { \pi } _ { 0 }
+解释为零信号普遍程度的诊断性上界，而非一个参数。由于
+\hat { \pi } _ { 0 } ( \lambda )
+存在向上偏误（如 Langaas et al., 2005），本文每年在𝛬 = {0.6,0.7,0.8,0.9}上取最小值，再跨年平均。这一做法遵循 Storey (2002)与 Storey and Tibshirani (2003)的插值估计量，在弱相依条件下得到零信号比例的保守但一致的估计。
+
+给定
+\hat { \pi } _ { 0 } ( \lambda )
+，在 p 值阈值𝜏下，被判定为显著的信号中的 FDP 满足:
+
+\mathrm { F D P } ( \tau ) \approx \hat { \pi } _ { 0 } \times \frac { \tau } { \hat { F } _ { p } ( \tau ) } \leq \frac { \tau } { \hat { F } _ { p } ( \tau ) }\tag{1}
+
+其中
+\hat { F } _ { p } ( \tau ) : = \# \{ p _ { i } \leq \tau \} / m
+为 p 值不高于𝜏的信号比例。上界
+\cdot \tau / \hat { F } _ { p } ( \tau )
+对应 Chen (2025)的“Easy FDP”，不依赖于对
+\hat { \pi } _ { 0 }
+的估计。Storey (2002)的插值估计量
+\hat { \pi } _ { 0 }
+\tau / \hat { F } _ { p } ( \tau )
+通常更为精确，但仍属保守（如 Andrikogiannopoulou and Papakonstantinou, 2019；Harvey and Liu, 2020）。由于符合条件的信号组合数量随时间变化，本文逐
+
+敬请参阅末页重要声明及评级说明
+
+7 / 18
+
+<!-- page: 8 -->
+
+## Page 8
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+年计算
+. \hat { F } _ { p } ( \tau )
+并跨年平均后再评估 FDP 界。
+
+其补集
+1 - \mathrm { F D P } ( \tau )
+，也称真实发现比例（TDP）或阳性预测值（PPV），保守地刻画了被选中信号中有多少可能并非零信号。因此，本文将
+\cdot 1 - \hat { \boldsymbol { \pi } } _ { 0 } \cdot \boldsymbol { \tau } / \hat { F } _ { p } ( \boldsymbol { \tau } )
+视为描述被选信号构成的信息性基准，而非组合结果所需的精确估计。
+
+需要强调的是，后文的组合表现分析并不依赖于正确区分弱信号与零信号；FDP分析仅用于刻画组合构建所处的实证环境。
+
+## 3.3 样本外表现比较:分散化与严格筛选
+
+为考察信号分散化的增量价值，本文借鉴 Dybvig and Ross (1985)的经典思想:对于均值–方差投资者而言，若下述回归的截距项𝑎为正，则组合𝐴优于既有组合𝐵:
+
+r _ { A , t } = a + b \cdot r _ { B , t } + \tilde { \varepsilon } _ { t }\tag{2}
+
+其中
+r _ { A , t }
+和
+r _ { B , t }
+分别为组合𝐴和𝐵的超额收益，
+\tilde { \varepsilon } _ { t }
+为残差。
+
+本文将该框架用于比较分散化的组合分组与最严格的基准分组
+(p \leq 0.1\%)
+，即
+\tau = 0 . 1 \% )
+）。所有策略相对于 CAPM 或 FF6 模型均构造为 beta 中性。具体而言，本文将各组合分组的样本外基准调整收益，对最严格分组
+(p \leq 0.1\%)
+）的基准调整收益进行时间序列回归。截距项显著为正
+(   \hat { a } > 0   )
+表明分散化在最严格基准之外带来了增量的样本外表现提升（对均值–方差投资者
+而言  )
+，而
+\hat { a } < 0
+则表明表现下降。
+
+这一方法可以直接检验:在最严格筛选策略的基础上保留更多较弱的信号，是否能提升组合表现——这也预示了本文的主要结果，即在含噪预测变量上的分散化优于严格筛选。
+
+## 4 实证结果
+
+## 4.1 描述性统计
+
+**[table]**
+
+图表 2 样本描述性统计
+<table><tr><td></td><td>Sample period</td><td>Average</td><td>S.D.</td><td>Min</td><td>Max</td></tr><tr><td>Signal Portfolios</td><td>Full (1983–2022)</td><td>13932.0</td><td>1439.0</td><td>10910.0 (FY 1983)</td><td>15270.0 (FY 2015)</td></tr><tr><td></td><td>1st Half (1983–2002)</td><td>12756.1</td><td></td><td></td><td></td></tr><tr><td></td><td>2nd Half (2003–2022)</td><td>15108.0</td><td></td><td></td><td></td></tr><tr><td>Individual Firms</td><td>Full (1983–2022)</td><td>2366.8</td><td>441.5</td><td>1782.0</td><td>3345.0</td></tr><tr><td></td><td>1st Half (1983–2002)</td><td>2701.3</td><td></td><td>(FY 2019)</td><td>(FY 1998)</td></tr><tr><td></td><td>2nd Half (2003–2022)</td><td>2032.4</td><td></td><td></td><td></td></tr><tr><td>Firm/Signal Ratio</td><td>Full (1983–2022)</td><td>17.3%</td><td>4.3%</td><td>11.8%</td><td>24.6%</td></tr><tr><td></td><td>1st Half (1983–2002)</td><td>21.2%</td><td></td><td>(FY2019)</td><td>(FY 1998)</td></tr><tr><td></td><td>2nd Half (2003–2022)</td><td>13.5%</td><td></td><td></td><td></td></tr></table>
+This table summarizes the samples used in the analysis. The Firm/Signal Ratio is defined as the number of sample stocks divided by the number of eligible signal portfolios. We report the average, standard deviation (S.D.), minimum (Min), and maximum (Max) over the full sample period from 1983 to 2022. The table also reports averages for the first-half (1983–2002) and second-half (2003–2022) subperiods.
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 2 报告了信号组合和个股的年均样本规模。在全样本（1983–2022 财年）中，信号组合的平均数量为 13,932 个，且随时间增加，从前半段（1983–2002 年）的 12,756 个增至后半段（2003–2022 年）的 15,108 个。这一数量比个股数量高出一个数量级:全样本个股平均为 2,367 只，前半段为 2,701 只，后半段降至 2,032
+
+敬请参阅末页重要声明及评级说明
+
+8 / 18
+
+<!-- page: 9 -->
+
+## Page 9
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+只，与 1990 年代末以来美国上市公司数量下降的事实一致。平均而言，个股数量与信号组合数量之比总体约为 17%，从前半段的 21%降至后半段的 13%。因此，该样本是一个典型的高维环境:每个横截面上预测变量（基本面信号）的数量远超股票数量。
+
+证券研究报告
+
+**[table]**
+
+图表 3 样本内 alpha 的描述性统计
+<table><tr><td rowspan="2">P-value thresholds</td><td colspan="2">CAPM Alphas</td><td colspan="2">FF6 Alphas</td></tr><tr><td>Proportions</td><td>Mean |α| in %</td><td>Proportions</td><td>Mean |α| in %</td></tr><tr><td>0.1%</td><td>1.0%</td><td>0.893</td><td>1.3%</td><td>0.750</td></tr><tr><td>0.5%</td><td>2.7%</td><td>0.779</td><td>2.8%</td><td>0.682</td></tr><tr><td>1.0%</td><td>4.3%</td><td>0.732</td><td>4.2%</td><td>0.647</td></tr><tr><td>5.0%</td><td>12.1%</td><td>0.608</td><td>11.3%</td><td>0.550</td></tr><tr><td>10%</td><td>19.1%</td><td>0.544</td><td>18.1%</td><td>0.500</td></tr><tr><td>20%</td><td>30.6%</td><td>0.473</td><td>29.4%</td><td>0.441</td></tr><tr><td>30%</td><td>40.5%</td><td>0.426</td><td>39.7%</td><td>0.398</td></tr><tr><td>100%</td><td>100%</td><td>0.244</td><td>100%</td><td>0.231</td></tr></table>
+For each p-value threshold in the first column, this table reports the proportion of signal portfolios with in-alphas meeting the threshold and their mean absolute alphas (|α|, % per month). Alphas are estimated relative to the CAPM and FF6 benchmark models using 20-year rolling training windows ending between 1983 and 2022.
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所图表 3 汇总了各 p 值阈值下显著 alpha 的平均占比。CAPM 和 FF6 alpha 由1964–1983 年至 2003–2022 年的滚动样本内训练窗口估计。全样本中，1.0%的CAPM alpha（约 136 个）和 1.3%的 FF6 alpha（约 182 个）落入 p≤0.1%的分组，而约 12%的 CAPM 组合（约 1,700 个）和 11%的 FF6 组合（约 1,600 个）满足传统的 5%阈值。图表 3 还报告了样本内 alpha 绝对值的平均（|α|）:在 p≤0.1%分组中，CAPM 和 FF6 下分别为每月 0.89%和 0.75%；在 p≤5%分组中分别为 0.61%和 0.55%。随着阈值放宽，样本内 alpha 绝对值逐渐下降，在 p≤30%分组中分别为0.43%和 0.40%。
+
+图表 4 CAPM 与 FF6 alpha 的 p 值经验分布
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 4 绘制了滚动训练窗口中 CAPM（左图）和 FF6（右图）alpha 的 p 值横截面分布，横轴对应定义 28 个分组的 p 值阈值。粗实线为经验累积分布函数，在alpha 为零的原假设下应与 45 度线重合。对于 50%以上的阈值，分布非常接近原假
+
+敬请参阅末页重要声明及评级说明
+
+9 / 18
+
+<!-- page: 10 -->
+
+## Page 10
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+设下的均匀分布基准，说明 p 值的经验分布在接近 1 处近似均匀，从而 Storey (2002)的
+\hat { \pi } _ { 0 ^ { \prime } }
+估计量对零信号的普遍程度具有信息含量；而在小 p 值处偏离原假设则表明存在非零信号。虚线为经验密度（直方图），极小 p 值处的明显集中反映了真实的预测内容。CAPM 与 FF6 的分布大体相似，但 FF6 分布在极左尾具有更大的质量。总体而言，两图在小 p 值处的质量均超出原假设的预期。
+
+## 4.2 样本内诊断
+
+图表 5 报告了用 Storey (2002)保守插值估计量得到的零信号比例
+(   \hat { \pi } _ { 0 }   )
+估计，涵盖全样本与两个子样本。全样本中，CAPM 和 FF6 下的
+[ \hat { \pi } _ { 0 } ]
+分别为 79.1%和 80.6%。两者在后半段均有所下降，FF6下降尤为明显（从1983–2002年的84.8%降至2003–2022 年的 76.3%）。
+
+**[table]**
+
+图表 5 样本内诊断:零信号比例与真实 alpha 信号数量
+<table><tr><td>Benchmark</td><td>Full period FY 1983-2022</td><td>First half FY 1983-2002</td><td>Second half FY 2003-2022</td></tr><tr><td rowspan="5">CAPM FF6</td><td>Prevalence of null signals,</td><td>(Storey&#x27;s method) <eq>\pi_{0}</eq></td><td></td></tr><tr><td>79.1%</td><td>80.3%</td><td>77.9%</td></tr><tr><td>80.6%</td><td>84.8%</td><td>76.3%</td></tr><tr><td>Average number of true-alpha signals, m(1 – π0)</td><td></td><td></td></tr><tr><td>2912.3</td><td>2565.9</td><td>3303.9</td></tr><tr><td>CAPM FF6</td><td>2709.1</td><td>1933.8</td><td>3585.2</td></tr></table>
+This table reports in-sample diagnostics of all signal portfolios based on the cross-sectional distributions of p-values for CAPM and FF6 alphas. The prevalence of null signals
+( \pi _ { 0 } )
+and the implied number of true-alpha signals
+( m ( 1 - \pi _ { 0 } ) )
+are estimated using Storey's (2002) method described in Section 3.2. Results are reported for the full in-sample training period (1983-2022) and for two subperiods (1983-2002 and 2003–2022).
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所这些保守估计意味着，全样本中至少 19%–21%的受检信号（平均约 2,700–2,900 个）是非零信号；后半段该比例升至 22%–24%（约 3,300–3,600 个）。因此，即便在保守假设下，数以千计的数据挖掘财务比率信号并非零信号，只是其中许多单独来看在统计上较弱。
+
+敬请参阅末页重要声明及评级说明
+
+10 / 18
+
+<!-- page: 11 -->
+
+## Page 11
+
+证券研究报告
+
+华安证券 HUAAN RESEARCH
+
+金融工程
+
+**[table]**
+
+图表 6 不同 p 值阈值下的错误发现比例
+<table><tr><td rowspan="2">CAPM P-value</td><td colspan="3"></td><td colspan="3">FF6</td></tr><tr><td>Full period 1983-2022</td><td>First half 1983-2002</td><td>Second half 2003-2022</td><td>Full period 1983-2022</td><td>First half 1983-2002</td><td>Second half 2003-2022</td></tr><tr><td colspan="7"></td></tr><tr><td>0.1%</td><td>10.3%</td><td>9.3%</td><td>Chen&#x27;s (2025) Easy FDP upper bounds 11.5%</td><td>8.0%</td><td>8.7%</td><td>7.4%</td></tr><tr><td>0.5%</td><td>18.2%</td><td>18.1%</td><td>18.3%</td><td>17.7%</td><td>20.4%</td><td>15.7%</td></tr><tr><td>1.0%</td><td>23.5%</td><td>24.0%</td><td>23.0%</td><td>24.0%</td><td>27.8%</td><td>21.1%</td></tr><tr><td>5.0%</td><td>41.3%</td><td>42.3%</td><td>40.4%</td><td>44.1%</td><td>50.3%</td><td>39.3%</td></tr><tr><td>10.0%</td><td>52.3%</td><td>53.6%</td><td>51.0%</td><td>55.4%</td><td>61.9%</td><td>50.1%</td></tr><tr><td>20.0%</td><td>65.2%</td><td>66.2%</td><td>64.5%</td><td>68.1%</td><td>73.9%</td><td>63.2%</td></tr><tr><td colspan="7">Storey&#x27;s (2002) direct FDP estimates</td></tr><tr><td>0.1%</td><td>8.1%</td><td>7.5%</td><td>8.9%</td><td>6.4%</td><td>7.4%</td><td>5.6%</td></tr><tr><td>0.5%</td><td>14.4%</td><td>14.5%</td><td>14.3%</td><td>14.3%</td><td>17.3%</td><td>11.9%</td></tr><tr><td>1.0%</td><td>18.6%</td><td>19.2%</td><td>17.9%</td><td>19.3%</td><td>23.6%</td><td>16.1%</td></tr><tr><td>5.0%</td><td>32.7%</td><td>34.0%</td><td>31.5%</td><td>35.5%</td><td>42.7%</td><td>29.9%</td></tr><tr><td>10.0%</td><td>41.4%</td><td>43.0%</td><td>39.8%</td><td>44.6%</td><td>52.5%</td><td>38.2%</td></tr><tr><td>20.0%</td><td>51.8%</td><td>53.3%</td><td>50.4%</td><td>54.9%</td><td>62.7%</td><td>48.2%</td></tr></table>
+This table reports Chen's (2025) "Easy FDP" upper bounds and Storey's (2002) plug-in FDP estimates for signal portfolio buckets grouped by p-value thresholds (first column). The estimation procedures are described in Section 3.2. Results are reported separately for CAPM and FF6 alphas for the full in-sample training period (1983–2022) and for two subperiods (1983–2002 and 2003–2022).
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 6 报告了 Chen (2025)的“Easy FDP”上界
+(   \tau / \hat { F } _ { p } ( \tau )   )
+和 Storey (2002)的直接 FDP 估计
+(   \hat { \pi } _ { 0 } \cdot \tau / \hat { F } _ { p } ( \tau )
+），见式（1）。两种度量都显示出显著的虚假发现风险，其中有两点值得注意。
+
+第一，在传统的5%阈值下，Easy FDP上界意味着全样本中最多约41%的CAPM alpha 和约 44%的 FF6 alpha 可能是虚假的；在前半段子样本中，FF6 的上界更高（约 50%）。即便在 0.1%的严格阈值下，上界依然不可忽视:CAPM 约 10%，FF6约 8%，这意味着要将 FDP 控制在 5%以下，需要比 0.1%更严格的阈值。这一模式与 Chordia et al. (2020)的发现相呼应，后者报告在检验大量预测变量时，传统阈值下的 FDP 很大。
+
+第二，Storey (2002)的直接估计量给出更紧、但仍属保守的估计。在 5%阈值下，估计的 FDP 在 CAPM 和 FF6 下分别约为 33%和 36%。其补集意味着，在这一保守方法下，p≤5%分组中约三分之二的信号具有非零 alpha。就统计推断而言，传统阈值因此并不可靠，因为相当一部分发现（显著 alpha）可能是虚假的；但从组合角度看，其余信号在组合后仍可能做出有意义的贡献。即便在更宽松的阈值下（p≤10%和 p≤20%），真实 alpha 的比例仍分别达到 55%–59%和 45%–48%。
+
+## 4.3 样本外组合表现
+
+为评估组合表现，本文首先比较相对于 CAPM 和 FF6 基准、不同阈值下的样本外 alpha、风险和信息比率（及对应 t 值）（图表 7 与图表 8），然后利用 Dybvig and Ross (1985)框架评估相对于最严格基准的分散化增量收益（图表 9）。
+
+## 4.3.1样本外信息比率
+
+敬请参阅末页重要声明及评级说明
+
+11 / 18
+
+<!-- page: 12 -->
+
+## Page 12
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+**[table]**
+
+图表 7 各分组经 CAPM 调整的样本外表现
+<table><tr><td rowspan="2">P-value thresholds</td><td colspan="2">In-sample</td><td colspan="5">Out-of-sample</td></tr><tr><td>Proportion</td><td>Storey&#x27;s FDP</td><td>Alpha</td><td>Resid. SD</td><td>Info ratio</td><td>t-ratio</td><td>O/I α ratio</td></tr><tr><td>0.1%</td><td>1.0%</td><td>8.1%</td><td>0.268</td><td>2.195</td><td>0.422</td><td>2.675</td><td>0.300</td></tr><tr><td>0.5%</td><td>2.7%</td><td>14.4%</td><td>0.235</td><td>1.860</td><td>0.437</td><td>2.769</td><td>0.302</td></tr><tr><td>1.0%</td><td>4.3%</td><td>18.6%</td><td>0.230</td><td>1.704</td><td>0.467</td><td>2.959</td><td>0.314</td></tr><tr><td>2.0%</td><td>6.6%</td><td>23.8%</td><td>0.218</td><td>1.524</td><td>0.495</td><td>3.136</td><td>0.320</td></tr><tr><td>3.0%</td><td>8.6%</td><td>27.4%</td><td>0.205</td><td>1.425</td><td>0.498</td><td>3.154</td><td>0.315</td></tr><tr><td>4.0%</td><td>10.4%</td><td>30.3%</td><td>0.199</td><td>1.367</td><td>0.506</td><td>3.200</td><td>0.318</td></tr><tr><td>5.0%</td><td>12.1%</td><td>32.7%</td><td>0.195</td><td>1.313</td><td>0.514</td><td>3.257</td><td>0.321</td></tr><tr><td>6.0%</td><td>13.7%</td><td>34.7%</td><td>0.191</td><td>1.272</td><td>0.519</td><td>3.288</td><td>0.322</td></tr><tr><td>7.0%</td><td>15.1%</td><td>36.7%</td><td>0.183</td><td>1.236</td><td>0.512</td><td>3.244</td><td>0.317</td></tr><tr><td>8.0%</td><td>16.5%</td><td>38.4%</td><td>0.179</td><td>1.205</td><td>0.515</td><td>3.261</td><td>0.317</td></tr><tr><td>9.0%</td><td>17.8%</td><td>39.9%</td><td>0.175</td><td>1.178</td><td>0.515</td><td>3.258</td><td>0.316</td></tr><tr><td>10.0%</td><td>19.1%</td><td>41.4%</td><td>0.171</td><td>1.155</td><td>0.514</td><td>3.254</td><td>0.315</td></tr><tr><td>20.0%</td><td>30.6%</td><td>51.8%</td><td>0.144</td><td>0.968</td><td>0.516</td><td>3.266</td><td>0.305</td></tr><tr><td>30.0%</td><td>40.5%</td><td>58.6%</td><td>0.128</td><td>0.865</td><td>0.511</td><td>3.236</td><td>0.299</td></tr><tr><td>40.0%</td><td>49.8%</td><td>63.5%</td><td>0.113</td><td>0.786</td><td>0.498</td><td>3.153</td><td>0.290</td></tr><tr><td>50.0%</td><td>58.7%</td><td>67.3%</td><td>0.103</td><td>0.721</td><td>0.495</td><td>3.134</td><td>0.287</td></tr><tr><td>100.0%</td><td>100.0%</td><td>79.1%</td><td>0.068</td><td>0.492</td><td>0.478</td><td>3.029</td><td>0.278</td></tr></table>
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+**[table]**
+
+图表 8 各分组经 FF6 调整的样本外表现
+<table><tr><td rowspan="2">P-value thresholds</td><td colspan="2">In-sample</td><td colspan="5">Out-of-sample</td></tr><tr><td>Proportion</td><td>Storey&#x27;s FDP</td><td>Alpha</td><td>Resid. SD</td><td>Info ratio</td><td>t-ratio</td><td>O/I α ratio</td></tr><tr><td>0.1%</td><td>1.3%</td><td>6.4%</td><td>0.427</td><td>1.627</td><td>0.909</td><td>5.758</td><td>0.569</td></tr><tr><td>0.5%</td><td>2.8%</td><td>14.3%</td><td>0.364</td><td>1.332</td><td>0.947</td><td>5.998</td><td>0.534</td></tr><tr><td>1.0%</td><td>4.2%</td><td>19.3%</td><td>0.332</td><td>1.206</td><td>0.953</td><td>6.033</td><td>0.513</td></tr><tr><td>2.0%</td><td>6.3%</td><td>25.5%</td><td>0.310</td><td>1.080</td><td>0.994</td><td>6.291</td><td>0.509</td></tr><tr><td>3.0%</td><td>8.1%</td><td>29.8%</td><td>0.290</td><td>0.998</td><td>1.008</td><td>6.383</td><td>0.497</td></tr><tr><td>4.0%</td><td>9.8%</td><td>32.9%</td><td>0.274</td><td>0.945</td><td>1.006</td><td>6.368</td><td>0.485</td></tr><tr><td>5.0%</td><td>11.3%</td><td>35.5%</td><td>0.265</td><td>0.908</td><td>1.010</td><td>6.396</td><td>0.481</td></tr><tr><td>6.0%</td><td>12.8%</td><td>37.7%</td><td>0.254</td><td>0.880</td><td>1.002</td><td>6.345</td><td>0.473</td></tr><tr><td>7.0%</td><td>14.2%</td><td>39.8%</td><td>0.248</td><td>0.855</td><td>1.007</td><td>6.372</td><td>0.471</td></tr><tr><td>8.0%</td><td>15.5%</td><td>41.6%</td><td>0.244</td><td>0.838</td><td>1.008</td><td>6.383</td><td>0.471</td></tr><tr><td>9.0%</td><td>16.8%</td><td>43.2%</td><td>0.240</td><td>0.822</td><td>1.013</td><td>6.411</td><td>0.473</td></tr><tr><td>10.0%</td><td>18.1%</td><td>44.6%</td><td>0.236</td><td>0.809</td><td>1.010</td><td>6.395</td><td>0.472</td></tr><tr><td>20.0%</td><td>29.4%</td><td>54.9%</td><td>0.204</td><td>0.706</td><td>1.000</td><td>6.334</td><td>0.462</td></tr><tr><td>30.0%</td><td>39.7%</td><td>60.9%</td><td>0.182</td><td>0.643</td><td>0.978</td><td>6.193</td><td>0.456</td></tr><tr><td>40.0%</td><td>49.2%</td><td>65.5%</td><td>0.167</td><td>0.591</td><td>0.979</td><td>6.200</td><td>0.457</td></tr><tr><td>50.0%</td><td>58.2%</td><td>69.2%</td><td>0.153</td><td>0.547</td><td>0.971</td><td>6.145</td><td>0.454</td></tr><tr><td>100.0%</td><td>100.0%</td><td>80.6%</td><td>0.104</td><td>0.383</td><td>0.942</td><td>5.966</td><td>0.450</td></tr></table>
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 7（CAPM）和图表 8（FF6）报告了按样本内 p 值阈值分组的组合在 1984–2023 年间的样本外 alpha、残差风险和信息比率（及等价的 t 值）。可以观察到四个规律。
+
+第一，经 FF6 调整的信息比率在几乎所有分组中都高于经 CAPM 调整的信息比率。控制 FF6 因子后残差风险下降约 25%，FF6 信息比率约为 CAPM 下的两倍。这表明信号组合包含未被 FF6 因子暴露完全吸收的预测性变动。
+
+第二，样本外与样本内 alpha 之比（O/I 比率）显示，CAPM alpha 的衰减快于FF6 alpha:样本外 CAPM alpha 仅保留了样本内值的约 30%，而 FF6 alpha 保留了约 50%。这一差异与如下观点一致:基准调整收益中的噪声越大，估计误差被放大得越多，样本外评估时收缩的空间也越大（如 Efron and Morris, 1977）。
+
+第三，只保留最显著信号的组合表现差于更具包容性的组合。尽管更严格阈值下的 alpha 看起来更大，但残差风险急剧上升，导致信息比率更低。在最严格的阈值（p≤0.1%）下，信息比率（IR）和 t 值最低（CAPM:IR=0.42，t=2.67；FF6:IR=0.91，t=5.76）。相反，使用全部信号（p≤100%）得到更高的比率（CAPM:IR=0.48，t=3.03；FF6:IR=0.94，t=5.97），尽管其中约 80%的信号是零信号。虽然年化 alpha并不高（0.8%–1.2%），但其稳定性凸显了分散化的作用。
+
+第四，最佳表现出现在远高于
+FDR
+控制推断通常倡导的阈值处。对 CAPM 而
+
+敬请参阅末页重要声明及评级说明
+
+12 / 18
+
+<!-- page: 13 -->
+
+## Page 13
+
+** Denote significance at the 5% level.
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+言，p≤6%分组（约 1,900 个信号；FDP 约 35%）的样本外信息比率（0.52）和 t值（3.29）最高；对 FF6 而言，p≤9%分组（约 2,300 个信号；FDP 约 43%）的信息比率（1.01）和 t 值（6.40）最高。表现在较宽的阈值区间内都很稳健，表明当目标是组合表现而非对单个预测变量的推断时，p≤5%或 p≤10%这样的截断值可以是有效的。
+
+综合来看，图表 7 和图表 8 表明，在大量信号上的分散化可以稳定收益，最强的样本外表现出现在远高于统计推断所建议的 p 值阈值处。
+
+## 4.3.2分散化的增量收益
+
+接下来，本文考察相对于最严格的基准（p≤0.1%），分散化是否能改善表现（图表 9）。
+
+**[table]**
+
+图表 9 分散化的增量收益:Dybvig–Ross (1985)回归
+<table><tr><td colspan="7">Benchmark: τ = 0.1% Bucket</td></tr><tr><td rowspan="2">P-value thresholds</td><td colspan="3">CAPM-Adjusted</td><td colspan="3">FF6-Adjusted</td></tr><tr><td>Incremental Alpha (% p.a.)</td><td>t-stat</td><td>Beta to benchmk</td><td>Incremental Alpha (% p.a.)</td><td>t-stat</td><td>Beta to benchmrk</td></tr><tr><td>0.1%</td><td></td><td>(n.a.)</td><td></td><td></td><td>(n.a.)</td><td></td></tr><tr><td>0.2%</td><td>0.124</td><td>0.775</td><td>0.911</td><td>0.104</td><td>0.721</td><td>0.904</td></tr><tr><td>0.3%</td><td>0.084</td><td>0.427</td><td>0.860</td><td>0.209</td><td>1.130</td><td>0.851</td></tr><tr><td>0.4%</td><td>0.094</td><td>0.394</td><td>0.837</td><td>0.285</td><td>1.331</td><td>0.812</td></tr><tr><td>0.5%</td><td>0.189</td><td>0.733</td><td>0.818</td><td>0.370</td><td>1.622</td><td>0.781</td></tr><tr><td>0.6%</td><td>0.238</td><td>0.877</td><td>0.804</td><td>0.446</td><td>1.873*</td><td>0.757</td></tr><tr><td>0.7%</td><td>0.284</td><td>1.023</td><td>0.784</td><td>0.492</td><td>2.031**</td><td>0.737</td></tr><tr><td>0.8%</td><td>0.309</td><td>1.095</td><td>0.768</td><td>0.487</td><td>1.971**</td><td>0.722</td></tr><tr><td>0.9%</td><td>0.368</td><td>1.289</td><td>0.752</td><td>0.446</td><td>1.816*</td><td>0.708</td></tr><tr><td>1.0%</td><td>0.391</td><td>1.364</td><td>0.737</td><td>0.435</td><td>1.751*</td><td>0.692</td></tr><tr><td>2.0%</td><td>0.537</td><td>1.761*</td><td>0.647</td><td>0.621</td><td>2.412☆☆</td><td>0.604</td></tr><tr><td>3.0%</td><td>0.540</td><td>1.728*</td><td>0.598</td><td>0.680</td><td>2.632*☆☆</td><td>0.547</td></tr><tr><td>4.0%</td><td>0.576</td><td>1.791*</td><td>0.566</td><td>0.682</td><td>2.640**卖</td><td>0.510</td></tr><tr><td>5.0%</td><td>0.614</td><td>1.867*</td><td>0.537</td><td>0.707</td><td>2.721*☆卖</td><td>0.482</td></tr><tr><td>6.0%</td><td>0.635</td><td>1.897*</td><td>0.514</td><td>0.697</td><td>2.656**☆</td><td>0.460</td></tr><tr><td>7.0%</td><td>0.597</td><td>1.786*</td><td>0.497</td><td>0.721</td><td>2.748***</td><td>0.441</td></tr><tr><td>8.0%</td><td>0.603</td><td>1.813*</td><td>0.482</td><td>0.738</td><td>2.808****</td><td>0.427</td></tr><tr><td>9.0%</td><td>0.596</td><td>1.798*</td><td>0.468</td><td>0.757</td><td>2.872****</td><td>0.415</td></tr><tr><td>10.0%</td><td>0.591</td><td>1.784*</td><td>0.456</td><td>0.762</td><td>2.884****</td><td>0.404</td></tr><tr><td>20.0%</td><td>0.546</td><td>1.761*</td><td>0.369</td><td>0.765</td><td>2.969****</td><td>0.328</td></tr><tr><td>30.0%</td><td>0.491</td><td>1.704*</td><td>0.324</td><td>0.714</td><td>2.912***☆</td><td>0.286</td></tr><tr><td>40.0%</td><td>0.419</td><td>1.568</td><td>0.292</td><td>0.697</td><td>3.019****</td><td>0.255</td></tr><tr><td>50.0%</td><td>0.386</td><td>1.546</td><td>0.265</td><td>0.656</td><td>2.999****</td><td>0.231</td></tr><tr><td>60.0%</td><td>0.339</td><td>1.466</td><td>0.243</td><td>0.617</td><td>2.972****</td><td>0.211</td></tr><tr><td>70.0%</td><td>0.307</td><td>1.424</td><td>0.224</td><td>0.590</td><td>2.989****</td><td>0.194</td></tr><tr><td>80.0%</td><td>0.284</td><td>1.413</td><td>0.208</td><td>0.553</td><td>2.998****</td><td>0.180</td></tr><tr><td>90.0%</td><td>0.273</td><td>1.450</td><td>0.193</td><td>0.508</td><td>2.953**☆*</td><td>0.167</td></tr><tr><td>100.0%</td><td>0.242</td><td>1.397</td><td>0.178</td><td>0.460</td><td>2.907***賣</td><td>0.154</td></tr></table>
+This table reports results from Dybvig and Ross (1985) time-series regression results for portfolio buckets defined by the p-value thresholds in the first column. As described in Section 3.3, we regress CAPM- or FF6-adjusted returns of each bucket on those of the most selective benchmark bucket (p ≤ 0.1%) over the full out-of-sample period, 1/1984–12/2023. The intercept measures the incremental alpha relative to the benchmark. The table reports annualized incremental alphas (%) and heteroskedasticityconsistent t-statistics. Results are shown separately for CAPM- and FF6-adjusted returns. Reported betas are writ respect to the p ≤ 0.1% bucket.
+**** Denote significance at the 0.5% level.
+* Denote significance at the 10% level.
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所对 CAPM 调整收益而言，所有分组相对于 p≤0.1%基准都取得了正的增量收益，但幅度不大。最大的增量出现在 p≤6%，年化增量 alpha 为 0.635%（t=1.90）。更一般地，在 0.2%至 30%的较宽阈值范围内，t 统计量都超过 10%显著性水平的临界值（1.645）。
+
+对 FF6 调整收益而言，证据要强得多。所有分组都优于 p≤0.1%基准，增量更大且统计上更显著。p≤20%分组取得最大的年化增量 alpha 0.765%（t=2.97），p≤ 40%分组的 t 统计量最高（3.02）。
+3%
+以上的所有阈值都产生正且统计显著的增量，
+
+敬请参阅末页重要声明及评级说明
+
+13 / 18
+
+<!-- page: 14 -->
+
+## Page 14
+
+证券研究报告
+
+华安证券 HUAAN RESEARCH
+
+金融工程
+
+## t 统计量超过 1%显著性水平的临界值（2.576）。
+
+图表 10 分散化的增量收益
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 10 以纳入信号的比例为横轴，汇总了年化增量 alpha（左图）及其 t 统计量（右图）。对 CAPM 调整收益而言，使用约 10%–20%的信号（平均约 1,400–2,800个）似乎能使增量收益最大化；对 FF6 调整收益而言，纳入 20%–30%的信号（约2,800–4,200 个）时增量 alpha 达到峰值，而即便在更广的纳入水平下 t 统计量也保持高位。总体而言，Dybvig–Ross 回归证实，在大量信号上的分散化相对最严格的筛选策略带来了增量的样本外表现提升，强化了本文的核心结论:分散化优于严格筛选。
+
+## 4.4 动态变化
+
+Chen and Velikov (2023)指出，2000 年代初以后，交易成本侵蚀了大部分可交易的 alpha。此前的研究（Chordia et al., 2014；Green et al., 2017；Li and Mohanram, 2019）记录了 2000 年代初以后公司特征收益可预测性的下降，并将其归因于市场效率的提高、交易技术的进步以及监管变化（如公平披露规则、十进制报价、萨班斯–奥克斯利法案、流动性改善、ETF 增长以及异象发表后的衰减等）。
+
+本文将样本内评估划分为 1983–2002 年和 2003–2022 年两个子期，将样本外评估划分为 1984–2003 年和 2004–2023 年两个子期。
+
+敬请参阅末页重要声明及评级说明
+
+14 / 18
+
+<!-- page: 15 -->
+
+## Page 15
+
+证券研究报告
+
+华安证券 HUAAN RESEARCH
+
+金融工程
+
+**[table]**
+
+图表 11 2003 年前后的动态变化
+<table><tr><td rowspan="2">CAPM P-value</td><td colspan="3"></td><td colspan="3">FF6</td></tr><tr><td>First half 1984-2003</td><td>Second half 2004-2023</td><td>2nd-1st difference</td><td>First half 1984-2003</td><td>Second half 2004-2023</td><td>2nd-1st difference</td></tr><tr><td colspan="7"></td></tr><tr><td>0.1%</td><td>0.266</td><td>0.269</td><td>Out-of-Sample Alpha 0.003</td><td>0.662</td><td>0.193</td><td>-0.469</td></tr><tr><td>0.5%</td><td>0.236</td><td>0.233</td><td>-0.003</td><td>0.591</td><td>0.137</td><td>-0.454</td></tr><tr><td>1.0%</td><td>0.245</td><td>0.215</td><td>-0.030</td><td>0.538</td><td>0.126</td><td>-0.412</td></tr><tr><td>5.0%</td><td>0.212</td><td>0.177</td><td>-0.035</td><td>0.417</td><td>0.113</td><td>-0.304</td></tr><tr><td>10.0%</td><td>0.186</td><td>0.157</td><td>-0.029</td><td>0.372</td><td>0.100</td><td>-0.272</td></tr><tr><td>20.0%</td><td>0.154</td><td>0.135</td><td>-0.019</td><td>0.316</td><td>0.092</td><td>-0.224</td></tr><tr><td>100.0%</td><td>0.075</td><td>0.061</td><td>-0.015</td><td>0.161</td><td>0.047</td><td>-0.115</td></tr><tr><td colspan="7"></td></tr><tr><td>0.1%</td><td>2.24</td><td>3.49</td><td>Out-of-Sample T-Ratio 0.03</td><td>7.73</td><td>3.26</td><td></td></tr><tr><td>0.5%</td><td>2.29</td><td>3.82</td><td>-0.04</td><td>8.52</td><td>2.82</td><td>-6.38 -7.57</td></tr><tr><td>1.0%</td><td>2.62</td><td>3.69</td><td>-0.39</td><td>8.61</td><td>2.81</td><td>-7.59</td></tr><tr><td>5.0%</td><td>3.12</td><td>3.51</td><td>-0.58</td><td>8.95</td><td>3.29</td><td>-7.42</td></tr><tr><td>10.0%</td><td>3.14</td><td>3.46</td><td>-0.55</td><td>8.96</td><td>3.27</td><td>-7.47</td></tr><tr><td>20.0%</td><td>3.15</td><td>3.44</td><td>-0.43</td><td>8.64</td><td>3.49</td><td>-7.04</td></tr><tr><td>100.0%</td><td>3.01</td><td>3.08</td><td>-0.65</td><td>8.02</td><td>3.37</td><td>-6.63</td></tr><tr><td colspan="7">False Discovery Proportion (Storey&#x27;s FDP)</td></tr><tr><td>0.1%</td><td>7.5%</td><td>8.9%</td><td>1.5%</td><td>7.4%</td><td>5.6%</td><td>-1.8%</td></tr><tr><td>0.5%</td><td>14.5%</td><td>14.3%</td><td>-0.2%</td><td>17.3%</td><td>11.9%</td><td>-5.3%</td></tr><tr><td>1.0%</td><td>19.2%</td><td>17.9%</td><td>-1.3%</td><td>23.6%</td><td>16.1%</td><td>-7.5%</td></tr><tr><td>5.0%</td><td>34.0%</td><td>31.5%</td><td>-2.5%</td><td>42.7%</td><td>29.9%</td><td>-12.8%</td></tr><tr><td>10.0%</td><td>43.0%</td><td>39.8%</td><td>-3.2%</td><td>52.5%</td><td>38.2%</td><td>-14.2%</td></tr><tr><td>20.0%</td><td>53.3%</td><td>50.2%</td><td>-3.2%</td><td>62.7%</td><td>48.2%</td><td>-14.5%</td></tr><tr><td>100.0%</td><td>80.3%</td><td>77.9%</td><td>-1.8%</td><td>84.8%</td><td>76.3%</td><td>-8.6%</td></tr></table>
+This table compares out-of-sample alphas and their corresponding t-ratios across two subperiods, 1984–2003 and 2004–2023, for portfolio buckets defined by the p-value thresholds in the first column. The “2nd-1st Difference" column reports changes in out-of-sample alphas between the two periods, along with t-statistics assessing their statistical significance. To evaluate whether the observed shifts reflect changes in false discovery risk, the table also reports Storey's FDP estimates for each subperiod.
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+图表 11 报告了各子期的月度样本外 alpha。CAPM alpha 保持稳定，但 FF6 alpha 在后期大幅下降。例如，p≤0.1%分组的 FF6 alpha 从 1984–2003 年的 0.66%（t=7.73）降至 2004–2023 年的 0.19%（t=3.26），各阈值下的降幅相近。两期之间的差异高度显著（|t|>6）。平均而言，后期的 FF6 alpha 约为前期的 30%。如图表 5所示，这些下降并非由更高的虚假发现驱动:Storey 的估计表明，后期 FF6 的 FDP和
+\hat { \pi } _ { 0 }
+均更低（
+{ \widehat { \pi } } _ { 0 1 }
+从 84.8%降至 76.3%）。因此，这种恶化反映的是经
+FF6
+调整的
+alpha
+本身的下降，与市场效率的提高相一致。
+
+图表 12 经 CAPM 与 FF6 调整的累计对数收益
+
+资料来源:《Selection versus diversification in noisy alpha environments》，华安证券研究所
+
+敬请参阅末页重要声明及评级说明
+
+15 / 18
+
+<!-- page: 16 -->
+
+## Page 16
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+图表 12 绘制了 p 值阈值为 0.1%、1.0%、5.0%、10%、20%、50%和 100%的分组经 CAPM 调整（左图）和 FF6 调整（右图）的样本外累计残差收益（对数）。经 CAPM 调整的信号组合收益在 1980 年代末的下跌、1990 年代末的互联网泡沫及其破灭、全球金融危机和新冠衰退等重大事件前后经历了明显的回撤，且 p 值阈值较低的高度筛选组合的回撤比更具包容性的组合更为剧烈。
+
+相比之下，经 FF6 调整的收益在这些事件前后的波动更小。累计残差收益保持上升，但斜率在 2003 年前后向下移动，与此前的研究和本文的子期结果一致。
+
+综合来看，证据表明，尽管零信号普遍存在，最强的组合表现出现在高于 FDR控制统计推断通常倡导的 p 值阈值处，此时在大量弱信号上的分散化可以提高信息比率。2000 年后样本外 FF6 alpha 的下降表明，与 FF6 共同因子不相关的特质性机会正在消退，这与市场效率的提高相一致。
+
+## 5 启示
+
+本文的结果表明，在噪声 alpha 环境下，对组合构建而言，跨信号分散化可能比仅基于统计显著性的严格筛选更有效。这一洞见与围绕收益预测变量激增（即“因子动物园”）的讨论直接相关。此前的研究强调用严格阈值控制假设检验中的虚假发现（如 Harvey et al., 2016；Harvey and Liu, 2020；Chordia et al., 2020），而另一些研究表明，未达到此类阈值的预测变量在组合中仍可能保留经济价值（如 Chen, 2024, 2025；Chen et al., 2025）。本文的发现调和了这两种观点:当目标是组合表现时，面向推断的筛选规则未必是最优的。
+
+从方法论角度看，组合结果也可以通过正则化的视角来理解。单个信号组合是分别构建的，在信号层面几乎没有收缩的空间；而对大量信号组合进行等权聚合，实际上实现了模型平均和隐性收缩。在这个意义上，本文的方法与 Ledoit and Wolf (2004)和 DeMiguel et al. (2009)研究的 1/N 规则相关，后者被视为一种极端形式的正则化。由此看来，等权配置起到了稳定组合权重的作用。
+
+对从业者而言，启示在于:广泛纳入信号而非严格筛选，可以带来更稳定的表现和更高的信息比率。尽管交易成本已侵蚀了早期文献记录的大部分可交易 alpha（Chen and Velikov, 2023），但跨信号分散化可以通过交易相互抵消来降低换手并减轻交易成本（DeMiguel et al., 2020）:若将𝑚个组合的权重向量等权聚合，由三角不等式可知，聚合组合的权重变动不超过各组合权重变动的平均值，分散化由此分摊了再平衡需求。
+
+对研究者而言，结果提示应将注意力从检验单个异象转向理解大量信号组合在一起时如何相互作用。这一视角自然地与统计学和机器学习中关于高维预测的文献相衔接，后者表明对大量弱预测变量——甚至噪声——进行聚合，可以通过分散化和正则化提升表现（如 Bishop, 1995；Li et al., 2018；Liao et al., 2024）。未来的研究可以进一步探讨，在存在大量弱信号或零信号的噪声环境中，替代的聚合方案或显式的正则化方法如何影响组合表现。
+
+## 6 结论
+
+本文拓展了 Yan and Zheng (2017)的数据挖掘框架，考察了在存在大量收益预测变量的环境中信号筛选与分散化之间的权衡。尽管零信号普遍存在，样本外证据
+
+敬请参阅末页重要声明及评级说明
+
+16 / 18
+
+<!-- page: 17 -->
+
+## Page 17
+
+证券研究报告
+
+华安证券HUAAN RESEARCH
+
+金融工程
+
+## 表明，只保留最显著预测变量的组合，其表现不及保留更广泛信号集合的策略。
+
+从组合角度看，当组合充分分散时，纳入零信号（噪声）未必有害。零信号的预期 alpha 按定义为零，但若只保留最显著的预测变量，反而可能增大预测误差方差、破坏组合权重的稳定性并削弱分散化收益。相反，聚合大量弱信号和零信号可以稳定组合构建并提高信息比率。实证上，相对于 CAPM，信息比率在 p 值阈值约 6%处最高，此时组合平均保留约 1,900 个信号，尽管零信号比例高达 35%。
+
+对研究者而言，这些结果凸显了在高维环境中，统计显著性本身并非经济有用性的完美指引。对从业者而言，研究结果表明，在众多预测变量上分散化往往比集中于一小部分高度显著的信号更有效。尽管交易成本已缩小了利用单个异象的空间，但分散化的信号组合可以通过交易抵消来控制成本。
+
+总体而言，本文的发现厘清了当目标是组合构建而非假设检验时，应如何理解不断增长的收益预测变量集合。在充斥着弱信号与零信号的混杂环境中，组合层面的聚合在提升表现方面发挥着核心作用。本文并不试图解决关于单个预测变量经济解释的争论，而是强调应使信号筛选规则与既定目标——统计推断还是组合表现— —相匹配。
+
+## 文献来源:
+
+核心内容摘选自 Shingo Goto 和 Toru Yamada 发表于《Journal of Banking and Finance》的论文《Selection versus diversification in noisy alpha environments》。
+
+## 风险提示:
+
+文献结论基于历史数据与海外文献进行总结；不构成任何投资建议。
+
+敬请参阅末页重要声明及评级说明
+
+17 / 18
+
+<!-- page: 18 -->
+
+## Page 18
+
+证券研究报告
+
+华安证券 HUAAN RESEARCH
+
+金融工程
+
+## [Table_Repu 重要声明
+
+## 分析师声明
+
+本报告署名分析师具有中国证券业协会授予的证券投资咨询执业资格，以勤勉的执业态度、专业审慎的研究方法，使用合法合规的信息，独立、客观地出具本报告，本报告所采用的数据和信息均来自市场公开信息，本人对这些信息的准确性或完整性不做任何保证，也不保证所包含的信息和建议不会发生任何变更。报告中的信息和意见仅供参考。本人过去不曾与、现在不与、未来也将不会因本报告中的具体推荐意见或观点而直接或间接收任何形式的补偿，分析结论不受任何第三方的授意或影响，特此声明。
+
+## 免责声明
+
+华安证券股份有限公司经中国证券监督管理委员会批准，已具备证券投资咨询业务资格。本报告中的信息均来源于合规渠道，华安证券研究所力求准确、可靠，但对这些信息的准确性及完整性均不做任何保证。在任何情况下，本报告中的信息或表述的意见均不构成对任何人的投资建议。在任何情况下，本公司、本公司员工或者关联机构不承诺投资者一定获利，不与投资者分享投资收益，也不对任何人因使用本报告中的任何内容所引致的任何损失负任何责任。投资者务必注意，其据此做出的任何投资决策与本公司、本公司员工或者关联机构无关。华安证券及其所属关联机构可能会持有报告中提到的公司所发行的证券并进行交易，还可能为这些公司提供投资银行服务或其他服务。
+
+本报告仅向特定客户传送，未经华安证券研究所书面授权，本研究报告的任何部分均不得以任何方式制作任何形式的拷贝、复印件或复制品，或再次分发给任何其他人，或以任何侵犯本公司版权的其他方式使用。如欲引用或转载本文内容，务必联络华安证券研究所并获得许可，并需注明出处为华安证券研究所，且不得对本文进行有悖原意的引用和删改。如未经本公司授权，私自转载或者转发本报告，所引起的一切后果及法律责任由私自转载或转发者承担。本公司并保留追究其法律责任的权利。
+
+## [Table_RankIntrod 投资评级说明
+
+以本报告发布之日起 6 个月内，证券（或行业指数）相对于同期相关证券市场代表性指数的涨跌幅作为基准，A 股以沪深 300 指数为基准；新三板市场以三板成指（针对协议转让标的）或三板做市指数（针对做市转让标的）为基准；香港市场以恒生指数为基准；美国市场以纳斯达克指数或标普 500 指数为基准。定义如下:
+
+## 行业评级体系
+
+增持—未来 6 个月的投资收益率领先市场基准指数 5%以上;
+
+中性—未来 6 个月的投资收益率与市场基准指数的变动幅度相差-5%至 5%;
+
+减持—未来 6 个月的投资收益率落后市场基准指数 5%以上;
+
+## 公司评级体系
+
+买入—未来 6-12 个月的投资收益率领先市场基准指数 15%以上；
+
+增持—未来 6-12 个月的投资收益率领先市场基准指数 5%至 15%；
+
+中性—未来 6-12 个月的投资收益率与市场基准指数的变动幅度相差-5%至 5%；
+
+减持—未来 6-12 个月的投资收益率落后市场基准指数 5%至 15%；
+
+卖出—未来 6-12 个月的投资收益率落后市场基准指数 15%以上；
+
+无评级—因无法获取必要的资料，或者公司面临无法预见结果的重大不确定性事件，或者其他原因，致使无法给出明确的投资评级。
+
+敬请参阅末页重要声明及评级说明
+
+18 / 18

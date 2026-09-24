@@ -1,0 +1,139 @@
+{
+  "doc_id": "doc_13",
+  "metadata": {
+    "title": "转债蒙特卡洛定价的改进及应用:测度变换与张量计算",
+    "authors": [
+      "马普凡",
+      "刘璐"
+    ],
+    "publication_year": 2024
+  },
+  "original": {
+    "research_scenario": {
+      "description": "可转债定价依赖于正股股价走势，采用蒙特卡洛模拟对转债进行定价。可转债同时具有债性和股性的特征，转债的价值依赖于未来完整的股价路径，即内嵌路径依赖型期权。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 核心观点"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "1）正股价格的对数过程服从几何布朗运动；2）正股价格在到期收益率测度下服从鞅过程；3）转债仅可能下修或赎回，不考虑回售条款；4）在转股期内若提前转股更有利，则立刻转股。",
+      "source_locators": [
+        "<!-- page: 1 --> Section 核心观点"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "几何布朗运动",
+        "formula": "\\cfrac { d S _ { t } } { S _ { t } } = \\mu d t + \\sigma d W _ { t }",
+        "variables": [
+          {
+            "symbol": "S_t",
+            "meaning": "正股股价"
+          },
+          {
+            "symbol": "\\mu",
+            "meaning": "漂移率（真实测度下为正股期望收益率）"
+          },
+          {
+            "symbol": "\\sigma",
+            "meaning": "正股对数收益率的波动率"
+          },
+          {
+            "symbol": "W_t",
+            "meaning": "标准布朗运动"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 3 --> Section （一）转债定价基本假设"
+        ]
+      },
+      {
+        "name": "股价贴现过程",
+        "formula": "d S _ { t } ^ { * } = (\\mu - r) S _ { t } ^ { * } d t + \\sigma S _ { t } ^ { * } d W _ { t }",
+        "variables": [
+          {
+            "symbol": "S_t^*",
+            "meaning": "股价贴现过程"
+          },
+          {
+            "symbol": "r",
+            "meaning": "贴现率"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 4 --> Section （2）正股价格在到期收益率测度下服从鞅过程"
+        ]
+      },
+      {
+        "name": "重要性抽样",
+        "formula": "S_{t}=S_{0}\\times\\exp\\left(dt\\sum_{i=1}^{t}x_{i}\\right)\\prod_{i=1}^{t}\\frac{q(x_{i})}{p(x_{i})}",
+        "variables": [
+          {
+            "symbol": "q(x_i)",
+            "meaning": "到期收益率测度下的概率密度"
+          },
+          {
+            "symbol": "p(x_i)",
+            "meaning": "真实测度下的概率密度"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 7 --> Section （三）转债蒙特卡洛定价模型的改进:重要性抽样"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "1）正股收益率：最近6月年化收益率的21天滚动均值；2）正股波动率：最近6月年化波动率；3）赎回/下修概率：依据正股价格/转股价格的比值在0-0.3之间分段取值。",
+      "source_locators": [
+        "<!-- page: 12 --> Section （一）定价模型参数取值方法"
+      ]
+    },
+    "testing_methods": {
+      "description": "蒙特卡洛模拟结合最小二乘蒙特卡洛法（LSM）计算转债的存续价值，解决期权的最优停时问题。采用Tensor数据结构支持GPU计算与自动求导。",
+      "source_locators": [
+        "<!-- page: 8 --> Section （四）转债蒙特卡洛定价模型的改进:最小二乘蒙特卡洛模拟"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "模型在时间序列和截面上均进行了验证，平均定价误差在合理范围内。当正股收益率与到期收益率差距较大时，定价误差可能增大。",
+      "source_locators": [
+        "<!-- page: 16 --> Section （二）模型定价准确性验证"
+      ]
+    },
+    "tradability": {
+      "description": "模型可用于转债组合构建，定价误差反映了市场预期收益与历史收益的分歧，可用于改进“双低”转债策略获取超额收益。",
+      "source_locators": [
+        "<!-- page: 24 --> Section 四、基于蒙特卡洛定价模型的转债配置策略"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "该研究主要针对可转债定价，与期货日内单合约交易场景差异较大。模型中的路径依赖特性和条款触发机制在期货交易中不适用。",
+    "adjustments_needed": "需完全重构定价模型，移除转债特有条款逻辑，简化为一阶价格过程。数据频率需从日频调整为分钟/秒级高频数据。",
+    "data_sufficiency": "insufficient",
+    "replication_mode": "infeasible",
+    "missing_fields": [
+      "转股价格",
+      "赎回/下修触发条件",
+      "票息序列"
+    ]
+  },
+  "extensions": [
+    {
+      "hypothesis": "可将重要性抽样技术应用于期货价格路径模拟，通过测度变换提高模拟效率",
+      "rationale": "原文证明重要性抽样能有效降低估计值标准差（图1），该技术可迁移至期货价格模拟",
+      "source_locators": [
+        "<!-- page: 7 --> Section （三）转债蒙特卡洛定价模型的改进:重要性抽样"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "利用Tensor数据结构的自动微分功能计算期货价格敏感性指标",
+      "rationale": "原文展示Tensor支持自动求导（图4），可移植用于计算期货Delta/Gamma",
+      "source_locators": [
+        "<!-- page: 9 --> Section （五）转债蒙特卡洛定价模型的改进:Tensor数据结构"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

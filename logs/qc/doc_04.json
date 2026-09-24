@@ -1,0 +1,14 @@
+{
+  "doc_id": "doc_04",
+  "mineru_version": "4.0.7",
+  "ocr_mode": "auto",
+  "tier": "basic",
+  "source_file": "/Users/xiehaotong/Desktop/literature_pipeline/00_raw/期货日内因子_精选文献15篇/01_英文论文_微观结构与方法/04_预测悖论_ML加密货币实盘失败(The Prediction Paradox).pdf",
+  "output_markdown": "/Users/xiehaotong/Desktop/literature_pipeline/01_parsed/doc_04.md",
+  "page_count_rendered": 11,
+  "block_count": 125,
+  "char_count": 32209,
+  "started_at": "2026-09-24T05:52:59.445515+00:00",
+  "finished_at": "2026-09-24T05:54:43.137714+00:00",
+  "warnings": []
+}

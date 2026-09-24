@@ -1,0 +1,121 @@
+{
+  "doc_id": "doc_10",
+  "metadata": {
+    "title": "噪声 Alpha 环境下的信号筛选与分散化——“学海拾珠”系列之二百八十二",
+    "authors": [
+      "严佳炜",
+      "钱静闲"
+    ],
+    "publication_year": 2026
+  },
+  "original": {
+    "research_scenario": {
+      "description": "研究在噪声Alpha环境下，通过大规模数据挖掘构建基本面信号组合，考察组合构建中严格筛选与分散化的权衡。",
+      "source_locators": [
+        "<!-- page: 1 --> 主要观点"
+      ]
+    },
+    "economic_mechanism": {
+      "description": "通过分散化聚合大量弱信号和零信号，可以稳定组合构建并提高信息比率，优于仅保留统计显著信号的严格筛选策略。",
+      "source_locators": [
+        "<!-- page: 5 --> 与此同时，另一些研究质疑基于统计推断的筛选规则"
+      ]
+    },
+    "feature_formulas": [
+      {
+        "name": "信息比率",
+        "formula": "\\hat{\\alpha} / \\hat{\\omega}",
+        "variables": [
+          {
+            "symbol": "\\hat{\\alpha}",
+            "meaning": "月度alpha估计值"
+          },
+          {
+            "symbol": "\\hat{\\omega}",
+            "meaning": "相对于基准因子模型的残差风险（残差标准差）"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 7 --> 信息比率（information ratio，也称评价比率"
+        ]
+      },
+      {
+        "name": "错误发现比例(FDP)估计",
+        "formula": "\\hat{\\pi}_0 := \\underset{\\lambda \\in \\varLambda}{\\operatorname*{min}} \\hat{\\pi}_0(\\lambda), \\qquad \\hat{\\pi}_0(\\lambda) := \\frac{\\#\\{p_i > \\lambda\\}}{(1-\\lambda)m}",
+        "variables": [
+          {
+            "symbol": "p_i",
+            "meaning": "信号组合i的估计p值"
+          },
+          {
+            "symbol": "\\lambda",
+            "meaning": "p值阈值参数"
+          },
+          {
+            "symbol": "m",
+            "meaning": "信号总数"
+          }
+        ],
+        "source_locators": [
+          "<!-- page: 7 --> 记{ \\boldsymbol{ \\cdot } }{ \\boldsymbol{ p } } _ { i }"
+        ]
+      }
+    ],
+    "data_processing": {
+      "description": "从Compustat获取年度财务报表数据，从CRSP获取月度股票收益数据，样本期为1963-2023年。对240个Compustat会计变量中的每一个计算76种财务比率，总计得到超过18,000个信号。每年对每个信号将股票分为十组，构建市值加权的多空组合。",
+      "source_locators": [
+        "<!-- page: 6 --> 2.1 数据来源",
+        "<!-- page: 6 --> 2.2 信号组合"
+      ]
+    },
+    "testing_methods": {
+      "description": "采用两阶段设计：样本内用240个月滚动窗口估计CAPM与FF6 alpha及p值，按28个p值阈值分组；样本外固定beta、组内等权，评估后续12个月的alpha、残差风险与信息比率。使用Storey(2002)插值估计与Chen(2025) Easy FDP上界诊断虚假发现。",
+      "source_locators": [
+        "<!-- page: 6 --> 3 方法论",
+        "<!-- page: 7 --> 阶段一:样本内训练"
+      ]
+    },
+    "robustness_and_failures": {
+      "description": "虚假发现普遍：约80%的信号为零信号；在传统5%阈值下，Easy FDP上界约41%-44%。2003年后FF6 alpha降至此前约三成，但零信号比例反而下降。",
+      "source_locators": [
+        "<!-- page: 1 --> 文献主要结论",
+        "<!-- page: 11 --> 图表6"
+      ]
+    },
+    "tradability": {
+      "description": "市值加权组合强调经济显著性和实际可投资性。等权策略会过度暴露于小盘股和微型股，其中许多交易成本高或难以卖空。",
+      "source_locators": [
+        "<!-- page: 6 --> 2.2 信号组合"
+      ]
+    }
+  },
+  "adaptation": {
+    "project_fit": "该研究的方法论和结论对期货日内单合约交易具有重要参考价值，特别是关于分散化优于严格筛选的核心发现。虽然原始研究使用基本面数据和月度频率，但其关于信号聚合和噪声处理的洞见可以迁移到高频交易场景。",
+    "adjustments_needed": "需要将基本面信号转换为适用于高频数据的量价特征；将月度评估框架调整为日内或分钟级别的评估；可能需要开发新的p值阈值标准以适应高频数据特性。",
+    "missing_fields": [
+      "tick级交易数据",
+      "盘口数据",
+      "高频成交量数据"
+    ],
+    "data_sufficiency": "partial",
+    "replication_mode": "adjust"
+  },
+  "extensions": [
+    {
+      "hypothesis": "在高频交易中，聚合大量弱量价信号(如不同时间尺度的动量、波动率等)可能比仅使用少数强信号产生更稳定的表现。",
+      "rationale": "基于原文发现，在噪声环境下分散化可以稳定收益，这一原理应适用于高频量价信号。",
+      "source_locators": [
+        "<!-- page: 16 --> 本文的结果表明，在噪声 alpha 环境下"
+      ],
+      "basis_evidence_ids": []
+    },
+    {
+      "hypothesis": "对于高频交易，最优信号纳入比例可能高于月度策略，因为高频数据中噪声比例可能更高。",
+      "rationale": "原文发现信息比率峰值出现在p≤6%-9%处，远高于传统统计阈值。高频数据噪声更大，可能需要更宽松的阈值。",
+      "source_locators": [
+        "<!-- page: 12 --> 第四，最佳表现出现在远高于FDR控制推断通常倡导的阈值处"
+      ],
+      "basis_evidence_ids": []
+    }
+  ]
+}

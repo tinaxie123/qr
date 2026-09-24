@@ -1,0 +1,14 @@
+{
+  "doc_id": "doc_11",
+  "mineru_version": "4.0.7",
+  "ocr_mode": "auto",
+  "tier": "basic",
+  "source_file": "/Users/xiehaotong/Desktop/literature_pipeline/00_raw/期货日内因子_精选文献15篇/03_中文_期权与可转债/11_期权高频_凸性套利机会解析(高频系列四).pdf",
+  "output_markdown": "/Users/xiehaotong/Desktop/literature_pipeline/01_parsed/doc_11.md",
+  "page_count_rendered": 17,
+  "block_count": 190,
+  "char_count": 21296,
+  "started_at": "2026-09-24T05:59:38.805619+00:00",
+  "finished_at": "2026-09-24T06:00:27.286775+00:00",
+  "warnings": []
+}
